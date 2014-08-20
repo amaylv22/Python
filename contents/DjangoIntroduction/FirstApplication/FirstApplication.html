@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>First application</title>
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <meta name="author" content="JL">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>First application</h1>
+        </header>
+        
+        <article class="subsection">
+            <p>Para crear nuestra primer aplicación, desde la terminal y en la carpeta del proyecto, debemos digitar:</p>
+            <pre><code>python manage.py startapp principal</code></pre>
+            <p>Esto creará un directorio y cuatro archivos más, lo que nos dejaría con una estructura de archivos como esta:</p>
+            <ul>
+                <li>manage.py</li>
+                <li>projName [dir]
+                    <ul>
+                        <li>__init__.py</li>
+                        <li>settings.py</li>
+                        <li>urls.py</li>
+                        <li>wsgi.py</li>
+                    </ul>
+                </li>
+                <li>principal [dir]
+                    <ul>
+                        <li>__init__.py</li>
+                        <li>models.py</li>
+                        <li>test.py</li>
+                        <li>views.py</li>
+                        <li>admin.py</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+        
+        <article class="subsection">
+            <h1>Un miniproyecto para entender mejor</h1>
+            <p>Con fines didácticos, a partir de este punto, los ejemplos serán presentados en el contexto de una pequeña aplicación tipo recetario. Así los nombres de los directorios, plantillas (templates) y funciones tendrán relación con dicho ámbito. Sin embargo los conceptos y principios se mantienen generales.</p>
+            <p>El objetivo es ganaer claridad en la defición de los conceptos, y exponer al lector desde el comienzo con los detalles de la implementación de un projecto en Django.</p>
+        
+            <h2 id="">Modelo, template y vista en 15 minutos</h2>
+            <p>Antes de continuar, debe quedar claro que esto solamente es un pequeño ejemplo, el modelo, vista y plantillas serán desarrolladas a detalle en las secciones subsecuentes.</p> 
+             <p>Se creara un nuevo proyecto con el nombre de <em>recetario</em>, dentro de este crearemos una primera aplicacion denominada <em>principal</em>. La estructura de directorios después de estas opraciones es:</p>
+             <ul>
+                <li>manage.py</li>
+                <li>db.sqlite3</li>
+                <li>recetario [dir]
+                    <ul>
+                        <li>__init__.py</li>
+                        <li>settings.py</li>
+                        <li>urls.py</li>
+                        <li>wsgi.py</li>
+                    </ul>
+                </li>
+                <li>principal [dir]
+                    <ul>
+                        <li>__init__.py</li>
+                        <li>models.py</li>
+                        <li>test.py</li>
+                        <li>views.py</li>
+                        <li>admin.py</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h2 id="">Models.py</h2>
+            <p>Editar el archivo <em>models.py</em> correpondiente a la aplicacion <em>principal</em> de forma que tengamos:</p>
+            <pre><code>from django.db import models
+
+class Bebida(models.Model):
+	nombre = models.CharField(max_length=50)
+	ingredientes = models.TextField()
+	preparacion = models.TextField()
+
+	def __unicode__(self):
+		return self.nombre</code></pre>
+		
+		    <h2 id="">Views.py</h2>
+		    <p>De igual forma editar el archivo <em>view.py</em> hasta dejarlo de la siguiente forma:</p>
+		    <pre><code>from principal.models import Bebida
+from django.shortcuts import render_to_response
+
+def lista_bebidas(request):
+	bebidas = Bebida.objects.all()
+	return render_to_response('lista_bebidas.html',{'lista':bebidas})</code></pre>
+	
+	        <h2 id="">Admin.py</h2>
+	        <p>El contenido de este archivo debe ser:</p>
+	        <pre><code>from principal.models import Bebida
+from django.contrib import admin
+
+admin.site.register(Bebida)</code></pre>
+
+            <h2 id="">URLs.py</h2>
+            <p>El archivo debe contener:</p>
+            <pre><code>from django.conf.urls import patterns, include, url
+from django.contrib import admin
+
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    url(r'^$','principal.views.lista_bebidas'),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+)</code></pre>
+            
+            <h2 id="">Settings.py</h2>
+            <p>Debemos buscar la directiva TEMPLATE_DIRS y djarla de esta forma:</p>
+            <pre><code>TEMPLATE_DIRS = (
+    os.path.join(RUTA_PROYECTO,'plantillas'),
+)</code></pre>
+            <p>En esta sección le estamos diciendo que debe buscar las plantillas dentro de la carpeta del proyecto, en una carpeta llamada plantillas, como esta carpeta aún no existe debemos crearla manualmente dentro de recetario.</p>
+            
+            <h2 id="">Lista_bebidas.html</h2>
+            <p>Este archivo no existe, lo crearemos manualmente dentro de la carpeta <em>plantillas</em> recientemente creada dentro del directorio <em>recetario</em>. Su contenido es:</p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang='es'&gt;
+  &lt;head&gt;
+	&lt;title&gt;Lista de bebidas de ejemplo&lt;/title&gt;
+	&lt;meta charset='utf-8'&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Recetario de Bebidas&lt;/h1&gt;
+	{% for elemento in lista %}
+	&lt;ul&gt;
+	  &lt;li&gt;&lt;strong&gt;{{elemento.nombre}}&lt;/strong&gt;&lt;/li&gt;
+	  &lt;li&gt;{{elemento.ingredientes}}&lt;/li&gt;
+	  &lt;li&gt;{{elemento.preparacion}}&lt;/li&gt;
+	&lt;/ul&gt;
+	{% endfor %}
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            
+            <h2 id="">Poner en funcionamiento todo</h2>
+            <p>Listo, tenemos todo listo para ver funcionando nuestro ejemplo, para ello debemos de sincronizar nuevamente nuestra base de datos, para ello, nos ubicamos en la carpeta principal del proyecto (aquella donde se encuentra el archivo manage.py). Una vez en la carpeta principal, desde una terminal digitamos:</p>
+            <pre><code>python manage.py syncdb</code></pre>
+            <p>Esto nos dará el siguiente resultado: (prestar atención a la segunda línea que nos indica la creación de una nueva tabla):</p>
+            <figure>
+                <img src="images/Syncdb_nuevo_modelo.png" alt="alt-text" width="px" height="px">
+                <figcaption>Creación de tabal principal_bebidas</figcaption>
+            </figure>
+            
+            <p>Una vez realizado esto, lanzamos nuestro servidor de desarrollo:</p>
+            <pre><code>python manage.py runserver</code></pre>
+            <p>Nos ubicamos en <em>http://127.0.0.1:8000/admin</em>, ingresamos con nuestros datos configurados en la primera vez que sincronizamos la base de datos (si no recuerdas los datos que pusiste, puedes borrar el archivo recetario.db y volver a digitar: python manage.py syncdb para resincronizar).</p>
+            <p>Una vez dentro de la interfaz administrativa veremos que aparece una opción Bebidas. Podemos seguir intuitivamente la interfaz e ingresar datos.</p>
+            <p>Una vez guardados podemos ir a <em>http://127.0.0.1:8000/</em> y veremos lo que acabamos de ingresar. De esta manera ya tienes una interfaz rápida de ingreso y visualización de datos.</p>
+            
+             
+        </article>
+        
+        
+        
+        
+        
+    </body>
+</html>

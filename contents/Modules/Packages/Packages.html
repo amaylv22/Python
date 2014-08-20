@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Packages</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>Packages</h1>
+		</header>
+		
+		<article class="subsection">
+			<h1 id="">What a package is?</h1>
+			<p>In addition to a module name, an <em>import can name a directory path</em>. A directory of Python code is said to be a package, so such imports are known as package imports. In effect, <em>a package import turns a directory</em> on your computer <em>into another Python namespace</em>, with attributes corresponding to the subdirectories and module files that the directory contains.</p>
+			<p>Packages are <em>a way of structuring Python’s module namespace by using “dotted module names”</em>. For example, the module name A.B designates a submodule named B in a package named A. Just like the use of modules saves the authors of different modules from having to worry about each other’s global variable names, the use of dotted module names saves the authors of multi-module packages like NumPy or the Python Imaging Library from having to worry about each other’s module names.</p>
+			<p>When importing the package, Python searches through the directories on sys.path looking for the package subdirectory.</p>
+			<p>The <em>__init__.py</em> files are required to <em>make Python treat the directories as containing packages</em>; this is done to prevent directories with a common name, such as string, from unintentionally hiding valid modules that occur later on the module search path. In the simplest case, __init__.py <em>can just be an empty file, but it can also execute initialization code for the package</em> or set the __all__ variable, described later.</p>
+		</article>
+		
+		<article class="subsection">
+			<h1>Structure of a common package</h1>
+			<p>Suppose <em>you want to design a collection of modules (a “package”)</em> for the uniform handling of sound files and sound data. There are many different sound file formats (usually recognized by their extension, for example: .wav, .aiff, .au), so you may <em>need to create and maintain a growing collection of modules</em> for the conversion between the various file formats. There are also many different operations you might want to perform on sound data (such as mixing, adding echo, applying an equalizer function, creating an artificial stereo effect), so in addition you will be writing a never-ending stream of modules to perform these operations. Here’s a possible structure for your package (expressed in terms of a hierarchical filesystem):</p>
+			<pre><code>sound/							Top-level package
+	__init__.py					Initialize the sound package
+	formats/                  	Subpackage for file format conversions
+		__init__.py
+		wavread.py
+		wavwrite.py
+		aiffread.py
+		aiffwrite.py
+		auread.py
+		auwrite.py
+		...
+	effects/                  	Subpackage for sound effects
+		__init__.py
+		echo.py
+		surround.py
+		reverse.py
+		...
+	filters/                  	Subpackage for filters
+		__init__.py
+		equalizer.py
+		vocoder.py
+		karaoke.py
+		...</code></pre>
+		
+			<p>Users of the package can import individual modules from the package, for example:</p>
+			<pre><code>import sound.effects.echo</code></pre>
+			<p>This loads the submodule <em>sound.effects.echo</em>. It must be referenced with its full name.</p>
+			<pre><code>sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)</code></pre>
+			<p>An alternative way of importing the submodule is:</p>
+			<pre><code>from sound.effects import echo</code></pre>
+			<p>This also loads the submodule <em>echo</em>, and makes it available without its package prefix, so it can be used as follows:</p>
+			<pre><code>echo.echofilter(input, output, delay=0.7, atten=4)</code></pre>
+			<p>Yet another variation is to import the desired <em>function or variable directly</em>:</p>
+			<pre><code>from sound.effects.echo import echofilter</code></pre>
+			<p>Again, this loads the submodule echo, but this makes its function echofilter() directly available:</p>
+			<pre><code>echofilter(input, output, delay=0.7, atten=4)</code></pre>
+			<p>Note that when using <code> from package import item</code>, the item can be either a submodule (or subpackage) of the package, or some other name defined in the package, like a function, class or variable. The import statement first tests whether the item is defined in the package; if not, it assumes it is a module and attempts to load it. If it fails to find it, an ImportError exception is raised.</p>
+			<article class="note"><em>when using <code>from package import item</code></em>, the item can be either a submodule (or subpackage) of the package, or some other name defined in the package, like a function, class or variable. The <em>import statement first tests whether the item is defined in the package</em>; if not, it assumes it is a module and attempts to load it. If it fails to find it, an ImportError exception is raised.<br><em>Contrarily</em>, when using syntax like <em><code>import item.subitem.subsubitem</code></em>, each item except for the last must be a <em>package</em>; the last item can be a module or a package but can’t be a class or function or variable defined in the previous item.</article>
+		</article>
+		
+		<article class="subsection">
+			<h1>Importing * from a package</h1>
+			<p>What happens when the user writes <em>from sound.effects import *</em>? Ideally, one would hope that this somehow goes out to the filesystem, finds which submodules are present in the package, and imports them all. <em>This could take a long time and importing sub-modules might have unwanted side-effects</em> that should only happen when the sub-module is explicitly imported.</p>
+			<p>The only <em>solution</em> is for the package <em>author to provide an explicit index of the package</em>. The import statement uses the following convention: if a <em>package’s __init__.py code defines a list named __all__</em>, it is taken to be the <em>list of module names that should be imported</em> when <em>from package import *</em> is encountered. Package authors may also decide not to support it, if they don’t see a use for importing * from their package. For example, the file sound/effects/__init__.py could contain the following code:</p>
+			<pre><code>__all__ = ["echo", "surround", "reverse"]</code></pre>
+			<p>If <em>__all__</em> is not defined, the statement from sound.effects import * only ensures that the package sound.effects has been imported (possibly running any initialization code in __init__.py) and then imports whatever names are defined in the package. This includes any names defined (and submodules <em>explicitly loaded) by __init__.py</em>. It also includes any submodules of the package that were explicitly loaded by previous import statements. Consider this code:</p>
+			<pre><code>import sound.effects.echo
+import sound.effects.surround
+from sound.effects import *</code></pre>
+			<p>In this example, the echo and surround modules are imported in the current namespace because they are defined in the sound.effects package when the from...import statement is executed. (This also works when __all__ is defined.)</p>
+			<p>Although certain modules are designed to export only names that follow certain patterns when you use import *, it is still considered bad practise in production code.</p>
+			<p>Remember, there is nothing wrong with <em>using from Package import specific_submodule</em>. In fact, this <em>is the recommended notation</em> unless the importing module needs to use submodules with the same name from different packages.</p>
+		</article>
+		
+		<article class="subsection">
+			<h1>Intra-package References</h1>
+			
+			<h2 id="">Implicit relative imports</h2>
+			
+			<p>The submodules <em>often need to refer to each other</em>. For example, the <em>surround module</em> might use the <em>echo module</em>. In fact, such references are so common that the import statement first looks in the containing package before looking in the standard module search path. Thus, the surround module can simply use one of the next two options:</p>
+			<pre><code>import echo</code></pre>
+			<pre><code>from echo import echofilter</code></pre>
+			<p>If the imported module is not found in the current package (the package of which the current module is a submodule), the import statement looks for a top-level module with the given name.</p>
+			<pre><code>sound/							Top-level package
+	__init__.py					Initialize the sound package
+	formats/                  	Subpackage for file format conversions
+		__init__.py
+		wavread.py
+		wavwrite.py
+		aiffread.py
+		aiffwrite.py
+		auread.py
+		auwrite.py
+		...
+	effects/                  	Subpackage for sound effects
+		__init__.py
+		<em>echo</em>.py
+		<em>surround</em>.py
+		reverse.py
+		...
+	filters/                  	Subpackage for filters
+		__init__.py
+		equalizer.py
+		<em>vocoder</em>.py
+		karaoke.py
+		...</code></pre>
+		
+			<h2 id="">Absolute imports</h2>
+			
+			<p>When packages are structured into subpackages (as with the sound package in the example), you can use <b>absolute imports</b> to refer to submodules of siblings packages. For example, if the module <em>sound.filters.vocoder needs</em> to use the echo module in the <em>sound.effects package</em>, it can use:</p>
+			<pre><code>from sound.effects import echo</code></pre>
+			<h2 id="">Explicit relative imports</h2>
+			
+			<p>Starting with Python 2.5, in addition to the implicit relative imports described above, you can write explicit relative imports with the from module import name form of import statement. These <b>explicit relative imports</b> use <em>leading dots</em> to indicate the <em>current and parent packages</em> involved in the relative import. <em>From the surround</em> module for example, you might use:</p>
+			<pre><code>from . import echo
+from .. import formats
+from ..filters import equalizer</code></pre>
+
+		<article class="note">both explicit and implicit relative imports are based on the name of the current module. Since the name of the main module is always "__main__", <em>modules intended for use as the main module of a Python application should always use absolute imports</em>.</article>
+		</article>	
+		
+		<article class="subsection">
+			<h1>Packages in multiple directories</h1>
+			<p>Packages support one more special attribute, <em>__path__</em>. This is initialized to be a list containing the name of the directory holding the package’s __init__.py before the code in that file is executed. This variable can be modified; doing so affects future searches for modules and subpackages contained in the package.</p>
+			<p>While this feature is not often needed, it can be used to extend the set of modules found in a package.</p>
+		</article>
+		
+		
+	</body>
+</html>	

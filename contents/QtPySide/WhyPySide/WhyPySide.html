@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Why PySide? Factas and installation</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>Why PySide? Factas and installation</h1>
+		</header>
+		
+		<article class="subsection">
+			<h1>Why Pyside?</h1>
+			<p>PySide is a <em>Python binding</em> of the cross-platform <em>GUI toolkit Qt</em>. It is one of the alternatives for GUI programming in Python to Tkinter, which is bundled with Python. <em>Like Qt, PySide is free software</em>. The project started out using Boost.Python from the Boost C++ Libraries for the bindings and later switched to the binding generator <em>Shiboken</em> to reduce the size of the binaries and the memory footprint.</p>
+			<p><em>PySide</em> was <em>released under the LGPL</em> in August 2009 by Nokia, the former owners of the Qt toolkit, after Nokia failed to reach an agreement with <em>PyQt</em> developers Riverbank Computing <em>to change its licensing terms to include LGPL</em> as an alternative license.</p>
+			<p>PySide supports Linux/X11, Mac OS X, Windows and Maemo. Support for Android and Symbian is currently being added by the PySide community.</p>
+			
+			<p>Some links of interest:</p>
+			<ul>
+				<li><a href="http://zetcode.com/gui/pysidetutorial/" target="_self">PySide tutorial</a></li>
+				<li><a href="http://qt-project.org/wiki/PySide-Newbie-Tutorials" target="_self">PySideSimplicissimus</a></li>
+				<li><a href="http://qt-project.org/wiki/Differences_Between_PySide_and_PyQt" target="_self">Differences Between PySide and PyQt
+</a></li>	
+				<li><a href="http://blog.desdelinux.net/primeros-pasos-con-python-qt-1/" target="_self">Primeros pasos con Python</a></li>
+				<li><a href="http://ralsina.me/tr/es/stories/BBS47.html" target="_self">PyQt en ejemplos</a></li>
+				<li><a href="http://www.cs.usfca.edu/~afedosov/qttut/" target="_self">PyQt tutorial</a></li>			
+			</ul>
+			
+			<figure class="code">
+				<pre><code>import sys
+from PySide import QtGui
+ 
+app = QtGui.QApplication(sys.argv)
+ 
+win = QtGui.QWidget()
+ 
+win.resize(320, 240)  
+win.setWindowTitle("Hello, World!") 
+win.show()
+ 
+sys.exit(app.exec_())</code></pre>
+				<figcaption>Hello world example using PySide</figcaption>
+			</figure>
+		</article>
+		
+		<article class="subsection">
+			<h1>Installation on Ubuntu/Linux</h1>
+			<h2 id="">Qt</h2>
+			<pre><code>sudo apt-get install qt4-dev-tools</code></pre>
+			<p>And using the software center we should install the <em>qt4 designer</em>.</p>
+			
+			<h2 id="">PySide</h2>
+			<pre><code>sudo apt-get install python-pyside pyside-tools</code></pre>
+			
+			<h2 id="">Verify PySide Installation</h2>
+			<p>To check if PySide is installed correctly, launch a python console and type:</p>
+			<pre><code>import PySide</code></pre>
+			<p>If no error is returned, you have successfully installed PySide, and can start developing with Qt and Python. You can also <em>check the version</em> of your PySide installation:</p>
+			<pre><code>import PySide
+print(PySide.__version__)</code></pre>
+			<p>The result should be something like 1.0.0.</p>
+			
+			<h2 id="">Verify Qt Installation</h2>
+			<p>To check what version of Qt is used to compile PySide, launch a python console and type:</p>
+			<pre><code>import PySide.QtCore
+print(PySide.QtCore.__version__)</code></pre>
+			<p>The result should be something like 4.7.4.</p>
+			<p>Since the Qt version used to compile PySide may differ from the one used to run it, you might also want to check the current running version of Qt:</p>
+			<pre><code>print(PySide.QtCore.qVersion())</code></pre>
+			<p>The result could also be 4.7.4.</p>
+			
+		</article>	
+		
+	</body>
+</html>	

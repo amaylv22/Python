@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CherryPy overview</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="CherryPy overview section">
+		<meta name="description" content="CherryPy overview section">
+		<meta name="author" content="JL">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1 style="text-align: center;">CherryPy overview</h1>
+		</header>
+	
+		<article class="subsection">
+ 		<p>With the Internet breakthrough almost every programming language or platform has been pushed to welcome the rise of web development toolkits, libraries and frameworks. <b>CherryPy</b> is a Python library providing a friendly interface to the HTTP protocol, the backbone of the World Wide Web, using Python idioms.</p>
+ 		<p>CherryPy has started using the Pythons strengths as a dynamic language to model and bind the HTTP protocol into an API that follows Python idioms.</p>
+ 		<p>To illustrate the CherryPy library we will go through a very basic web application. Based on it, how the is designed and structured will be explain.</p>
+		</article>
+		
+		<article class="subsection">
+ 			<h1>CherryPy strengths</h1>
+ 			<ul>
+ 				<li><b>Simplicity</b>: keep CherryPy as simple as possible.</li>
+ 				<li><b>Self-contained</b>: the core of CherryPy will not require any third-party Python packages to work and would rely purely on the Python standard library.</li>
+ 				<li><b>Not intrusive</b>: provide a set of tools to any developer making no assumptions about the way in which he or she may choose to use them.</li>
+ 				<li><b>Open to discussion</b>.</li>
+ 				<li><b>Fun</b>: the fun element is also an important part, and observation suggest that it makes each one better and more creative developer.</li>
+ 			</ol>
+		</article>
+		
+		<article class="subsection">
+ 			<h1>Basic terminology</h1>
+ 			<p><b>CherryPy is a web application server</b>, but in order to avoid misunderstandings it is necessary to define a few key words.</p>
+ 			<dl>
+ 				<dt>Web server</dt>
+ 					<dd>is the interface dealing with the HTTP protocol. Its goal is to transform incoming HTTP requests into entities that are the passed to the application server and also transform information from the application server back into HTTP responses.</dd>
+ 				<dt>Application</dt>
+ 					<dd>is a piece of software that takes a unit of information, applies some computational logic to it, and returns a processed unit of information.</dd>
+ 				<dt>Application server</dt>
+ 					<dd>is a component that host one or more applications.</dd>
+ 				<dt>Web application server</dt>
+ 					<dd>is simply the aggregation of a web server and an application server into a single component.</dd>
+ 			</dl>
+		</article>
+		
+		<article class="exercise">
+ 			<h1>Basic example</h1>
+ 			<p>This basic example aims to illustrate the basics principles of a cherrypy based application. It creates a very basic web application allowing a user to leave a note on the main page through an HTML form.</p>
+ 			<p>The notes will be stacked and be rendered in a reverse order of their creation date.</p>
+ 			<p>A session object will be used to store the name of the author of the note. Finally, each note will have a URI attached to itself, of the form <code>/note/id</code></p>
+ 			
+ 			<h2>Implementation:</h2>
+ 			<p>The applications is conformed by two files</p>
+ 			<ul>
+ 				<li><b>note.py</b>: that contains the main applications source code</li>
+ 				<li><b>style.css</b>: the style sheet to confers format to the HTML code rendered</li>
+ 			</ul>
+		</article>
+	
+	</body>
+</html>

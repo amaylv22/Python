@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Knowing Django</title>
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <meta name="author" content="JL">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>Knowing Django</h1>
+        </header>
+        
+        <article class="subsection">
+            <p>Django impulsa el desarrollo de código limpio al promover buenas prácticas de desarrollo web, sigue el principio <em>DRY</em> (don't repeat yourself),  conocido también como una vez y sólo una.</p>
+            <p>Según este principio toda pieza de información nunca debería ser duplicada debido a que la duplicación incrementa la dificultad en los cambios y evolución posterior, puede perjudicar la claridad y crear un espacio para posibles inconsistencias.</p>
+            <p>Django usa una modificación de la arquitectura <em>Model-View-Controler (MVC)</em>, llamada <em>Model-Template-View (MTV)</em>, está forma de trabajar permite que sea pragmático. Esto se debe a que los desarrolladores no tuvieron la intención de seguir algún patron de desarrollo, sino hacer el <em>framework lo más funcional posible</em>.</p>
+            <p>Para empezar a entender MTV debemos fijarnos en la analogía con MVC</p>
+            <ul>
+                <li>El <em>modelo</em> en <em>Django</em> sigue siendo <b>modelo</b></li>
+                <li>La <em>vista</em> en <em>Django</em> se llama <b>Plantilla (Template)</b></li>
+                <li>El <em>controlador</em> en <em>Django</em> se llama <b>Vista</b></li>
+                
+            </ul>
+            
+            <figure>
+                <img src="images/Esquema_mtv.png" alt="alt-text" width="px" height="px">
+                <figcaption></figcaption>
+            </figure>
+            
+        </article>
+        
+        <article class="subsection">
+            <h1>El modelo</h1>
+            <p>El modelo <em>define los datos almacenados</em>, se encuentra en forma de <em>clases de Python</em>, cada tipo de dato que debe ser almacenado se encuentra en una variable con ciertos parámetros, posee métodos también. Todo esto <em>permite indicar y controlar el comportamiento de los datos</em>.</p>
+        </article>
+        
+        <article class="subsection">
+            <h1>La vista</h1>
+            <p>La vista se presenta en forma de <em>funciones en Python</em>, su propósito es <em>determinar que datos serán visualizados</em>, entre otras cosas. El ORM (Object-Relational mapping &mdash;técnica de programación para convertir datos entre el sistema de tipos utilizado en un lenguaje de programación orientado a objetos y la utilización de una base de datos relacional, utilizando un motor de persistencia. En la práctica esto crea una base de datos orientada a objetos virtual, sobre la base de datos relacional. Esto posibilita el uso de las características propias de la orientación a objetos, básicamente herencia y polimorfismo) de Django <em>permite escribir código Python en lugar de SQL para hacer las consultas</em> que necesita la vista.</p>
+            <p>La vista también se encarga de tareas conocidas como el envío de correo electrónico, la autenticación con servicios externos y la <em>validación de datos a través de formularios</em>. Lo mas importante a entender con respecto a la vista es que <em>no tiene nada que ver con el estilo de presentación de los datos</em>, sólo <em>se encarga de los datos</em>, la presentación es tarea de la plantilla.</p>
+        </article>
+        
+        <article class="subsection">
+            <h1>La plantilla</h1>
+            <p>La plantilla es básicamente una <em>página HTML con</em> algunas <em>etiquetas</em> extras propias de <em>Django</em>. Sin embargo no solamente crea contenido en HTML, sino también XML, CSS, Javascript, CSV, entre otros.</p>
+            <p>La plantilla <em>recibe</em> los <em>datos de la vista</em> y luego <em>los organiza</em> para la presentación al navegador web. Las etiquetas que Django usa para las plantillas permiten que sea flexible para los diseñadores del frontend, incluso tiene estructuras de datos como if, por por si es necesaria una presentación lógica de los datos, estas estructuras son límitadas para evitar un desorden poniendo cualquier tipo de código Python.</p>
+            <p>Esto permite que la lógica del sistema siga permaneciendo en la vista.</p>
+        </article>  
+        
+        <article class="subsection">
+            <h1>La configuración de las rutas</h1>
+            <p>Django posee un mapeo de URLs que permite controlar el despliegue de las vistas, esta configuración es conocida como <em>URLConf</em>. El trabajo del URLConf es leer la URL que el usuario solicitó, <em>encontrar la vista apropiada</em> para la solicitud y <em>pasar cualquier variable que la vista necesite</em> para completar su trabajo. El URLConf esta construido con expresiones regulares en Python y sigue la filosofia de Python: Explicito es mejor que implícito. Este URLConf permite que las rutas que maneje Django seán agradables y entendibles para el usuario.</p>
+            <p>Si consideramos al URLConf en el esquema anterior tendríamos este resultado más completo.</p>
+            <figure>
+                <img src="images/Esquema_mtv_urlconf.png" alt="alt-text" width="px" height="px">
+                <figcaption></figcaption>
+            </figure>   
+        </article>  
+        
+        <article class="subsection">
+            <h1>Archivos predeterminados</h1>
+            <p>Es importante entender el propósito de los <em>archivos</em> que se crean de manera predeterminada, <em>en un proyecto</em>. Así mismo cada proyecto necesita de <em>aplicaciones</em> donde podamos manejar los modelos y las vistas. Un proyecto pude contener más de una aplicacion y cada una de ellas cuanta con sus propios archivos predeterminados.</p>
+            <p>A continuación se presenta la descripción de cada uno de estos archivos para los dos casos mencionados:</p>
+            <h2 id="">Archivos del proyecto</h2>
+            <dl>
+                <dt>__init__.py</dt>
+                    <dd><p>archivo vacío que le dice a Python que debe considerar este directorio como un paquete de Python</p></dd>
+                <dt>manage.py</dt>
+                    <dd><p>contiene una porción de código que permite interactuar por medio de la linea de comando con el proyecto de Django</p></dd>
+                <dt>settings.py</dt>
+                    <dd><p> contiene todas las configuraciones para el proyecto</p></dd>
+                <dt>urls.py</dt>
+                    <dd><p>contiene las rutas que están disponibles en el proyecto, manejado por URLConf</p></dd>
+            </dl>
+            
+            <h2 id="">Archivos de la aplicación</h2>
+            <dl>
+                <dt>__init__.py</dt>
+                    <dd><p>archivo vacío que le dice a Python que debe considerar este directorio como un paquete de Python</p></dd>
+                <dt>models.py</dt>
+                    <dd><p>En este archivo se declaran las clases del modelo</p></dd>
+                <dt>views.py</dt>
+                    <dd><p>En este archivo se declaran las funciones de la vista</p></dd>
+                <dt>test.py</dt>
+                    <dd><p>En este archivo se declaran las pruebas necesarias para la aplicación</p></dd>
+            </dl>
+            
+            
+        </article>
+        
+    </body>
+</html>

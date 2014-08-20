@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DocTest</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>DocTest</h1>
+		</header>
+		
+		<article class="subsection">
+			<p>Como su nombre lo sugiere, el módulo <em>doctest</em> permite <em>combinar</em> la <em>documentación con</em> las <em>pruebas unitarias</em>. Esta idea propicia que las pruebas se mantengan actualizadas, y sirve a modo de ejemplo de uso del código, así como de ayuda para entender su propósito. Por otro lado, <em>ilustra</em> de forma sencilla el <em>concepto</em> detrás de las pruebas unitarias.</p>
+			<p>Cuando <em>doctest</em> encuentra uina linea en la documentación que comienza con <em>&gt;&gt;&gt;</em> asume que lo que le sigue es código Python a ejecutar, y que la <em>respuesta esperada</em> se encuentra en las líneas siguientes <em>sin &gt;&gt;&gt;</em>. El texto de la <em>prueba termina</em> cuando se encuentra una <em>linea en blanco</em>, o cuando se llega al final de la cadena de documentación.</p>
+			<p>Considere por ejemplo la siguiente función que devuelve una lista con el cuadrado de todos los números que compoenen la lista pasada como parámetro:</p>
+			<pre><code>def cuadrados(lista):
+	'''Calcula el cuadrado de los numeros de una lista'''
+	return [n ** 2 for n in lista]</code></pre>
+	
+			<p>Con el objetivo de comfirmar que dicha función realice su tarea de forma correcta, es decir, entregue los resutados esperados, podríamos crear una prueba en la que al pasarle el parámetro [0, 1, 2, 3], comprobemos que la salida sea [0, 1, 4, 9]:</p>
+			<pre><code>def cuadrados(lista):
+	'''Calcula el cuadrado de los numeros de una lista
+	
+	>>> l = [0, 1, 2, 3]
+	>>> cuadrados(l)
+	[0, 1, 4, 9]
+	'''
+	return [n ** 2 for n in lista]</code></pre>
+	
+			<h2 id="">Ejecutando las pruebas</h2>
+			<p>Para ejecutar las pruebas se utiliza la función <em>testmod</em> del módulo, a la que se le puede pasar opcionalmente el nombre de un módulo a evaluar (parámetro name). En el caso de que no se indique ningún argumento, como en este caso, se evalúa el módulo actual. De esta forma el scrip completa sería:</p>
+			<pre><code>def cuadrados(lista):
+	'''Calcula el cuadrado de los numeros de una lista
+	
+	>>> l = [0, 1, 2, 3]
+	>>> cuadrados(l)
+	[0, 1, 4, 9]
+	'''
+	return [n ** 2 for n in lista]
+
+def _test():
+	import doctest
+	doctest.testmod()
+
+if __name__ == "__main__":
+	_test()</code></pre>
+	
+			<p>Debido a que la llamada a la función _test() se encuentra en el main, las pruebas definidas se ejecutarán al ejecutar el script directamente: python script.py. Si <em>todo</em> es <em>correcto no</em> se mostrará ningún <em>mensaje</em>. En <em>caso contrario</em>, se <em>mostrará</em> el <em>resultado obtenido</em> y el resultado <em>esperado</em>.</p>
+			
+			<figure class="code">
+							<pre><code>**********************************************************************
+File "script.py", line 8, in __main__.cuadrados
+Failed example:
+    cuadrados(l)
+Expected:
+    [0, 1, 4, 9]
+Got:
+    [0, 2, 4, 6]
+**********************************************************************
+1 items had failures:
+   1 of   2 in __main__.cuadrados
+***Test Failed*** 1 failures.
+</code></pre>
+				<figcaption>Salida tras inducir un error cambiando n ** 2 por  n * 2</figcaption>
+				</figure>
+				<p>Si deseamos que <em>doctest muestre mensajes</em> durante su ejecución, a pesar de no encontrar errores, basta con añadir la <em>opción -v al llamar</em> al script <em>o</em> el parámetro <em>verbose=True</em> a la función <em>tesmod</em>:</p>
+				<pre><code>python script.py -v</code></pre>
+				<pre><code>doctest.testmod(verbose==True)</code></pre>
+				
+				<p>El ejemplo anterior (sin inducir errores) arrojaría el resultado:</p>
+				<pre><code>Trying:
+    l = [0, 1, 2, 3]
+Expecting nothing
+ok
+Trying:
+    cuadrados(l)
+Expecting:
+    [0, 1, 4, 9]
+ok
+2 items had no tests:
+    __main__
+    __main__._test
+1 items passed all tests:
+   2 tests in __main__.cuadrados
+2 tests in 3 items.
+2 passed and 0 failed.
+Test passed.
+</code></pre>
+			
+			
+
+		</article>
+		
+		<article class="subsection">
+			<h1>Uso de sentencias anidadas en doctest</h1>
+			<p>Para utilizar las sentencias anidadas basta con escribirlas tal como si se estuviera haciendo en el intérprete directamente, es decir, comenzando las lineas con <em>...</em> y a continuación agregando las <em>tabulaciones</em> correspondientes. Por ejemplo un ciclo for se escribiría como:</p>
+			<pre><code>'''prueba de doctest con for
+>>> for x in range(4):
+...     print x
+'''</code></pre>
+			<p>Considere el siguiente ejemplo:</p>
+			<pre><code>def cuadrado(num):
+	'''Calcula el cuadrado de un numero.
+	>>> l = [0, 1, 2, 3]
+	>>> for n in l:
+	...     cuadrado(n)
+	0
+	1
+	4
+	9
+	'''
+	return num ** 2
+
+def _test():
+	import doctest
+	doctest.testmod()
+
+if __name__ == "__main__":
+	_test()</code></pre>
+		</article>
+		
+	</body>
+</html>	

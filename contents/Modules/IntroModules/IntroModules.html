@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Introduction to modules</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>Introduction to modules</h1>
+		</header>
+		
+		<article class="subsection">
+
+			<p>As your program gets longer, you may want to split it into several files for easier maintenance. You may also want to use a handy function that you’ve written in several programs without copying its definition into each program.</p>
+			<p>To support this, Python has a way to put <em>definitions (including variables and functions)</em> in a file and use them in a script or in an interactive instance of the interpreter. Such a file is called a <em>module</em>; definitions from a module can be imported into other modules or into the main module (the collection of variables that you have access to in a script executed at the top level and in calculator mode).</p>
+			<p>A <em>module</em> is <em>a file containing Python definitions and statements</em>. The file name is the module name with the suffix .py appended. Within a module, the module’s name (as a string) is available as the value of the global variable <em>__name__</em>.</p>
+			<p>A module can contain executable statements as well as function definitions. These statements are intended to initialize the module. <em>They are executed only the first time</em> the module name is encountered in an import statement.</p>
+			<p>Each module has its own private symbol table, which is used as the global symbol table by all functions defined in the module. Thus, <em>the author of a module can use global variables in the module</em> without worrying about accidental clashes with a user’s global variables.</p>
+			<p>More about modules:</p>
+			<ul>
+				<li><a href="http://www.tutorialspoint.com/python/python_modules.htm" target="_blank">Modules</a></li>
+				<li><a href="https://docs.python.org/2/tutorial/modules.html" target="_blank">The module search path</a></li>
+				<li><a href="https://docs.python.org/2/tutorial/modules.html" target="_blank">"Compiled" Pyhon files</a></li>
+			</ul>
+		</article>
+		
+		<article class="exercise">
+			<h1>My first module</h1>
+			<p>Create a file called <em>fibo.py</em> in the current directory with the following contents:</p>
+			<pre><code># Fibonacci numbers module
+
+def fib(n):    # write Fibonacci series up to n
+    a, b = 0, 1
+    while b < n:
+        print b,
+        a, b = b, a+b
+
+def fib2(n): # return Fibonacci series up to n
+    result = []
+    a, b = 0, 1
+    while b < n:
+        result.append(b)
+        a, b = b, a+b
+    return result</code></pre>
+    		<p>Now enter the Python interpreter and import this module with the following command:</p>
+    		<pre><code>import fibo</code></pre>
+    		<p>This does not enter the names of the functions defined in fibo directly in the current symbol table; it only enters the module name fibo there. Using the module name you can access the functions:</p>
+    		<pre><code>>>> fibo.fib(1000)
+1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987
+>>> fibo.fib2(100)
+[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+>>> fibo.__name__
+'fibo'</code></pre>
+    		<p>If you intend to use a function often you can assign it to a local name:</p>
+    		<pre><code>>>> fib = fibo.fib
+>>> fib(500)
+1 1 2 3 5 8 13 21 34 55 89 144 233 377</code></pre>
+		</article>	
+		
+		
+		<article class="subsection">
+			<h1>Importing modules</h1>
+			<h2 id="">Generic import</h2>
+			
+			<p>This operation will <em>import all the functions an variables</em> contained in the module:</p>
+			<pre><code>import module_name</code></pre>
+			<p>By Importing module functions this way, it becomes necessary to call every function preceding it with the module name:</p>
+			<pre><code>import math
+math.sqrt(25)</code></pre>
+
+			<h2 id="">Function import</h2>
+			<p>This operation will <em>import only certain variables and functions</em>, those named in the call:</p>
+			<pre><code>from module import functionA 
+from module import functionA , functionB</code></pre>
+			<p>Using this kind of import you doesn't need to write any more module.functions_name() to call a function, you can <em>simply call it as function_name()</em></p>
+			
+			<h2 id="">Universal import</h2>
+			<p>When you use the generic import method, you're basically saying: "Bring the module box to my apartment so I can use all the cool stuff in it". Whenever you want a tool in the module, you have to the box an pull out the thing you want (which is why you have to type module.function_name for everything) even though the box is in your apartment, all the cool stuff you want is still in that box).</p>
+			<p>When you choose the function import method, you're saying: "Bring me only the function tool from the Module Box, and don't bring the Math Box to my apartment." This means you can use the function without reference to the module, but if you want anything else from the module, you have to import it separately, since the whole module Box isn't in your apartment for you to dig through.</p>
+			<p>The third option is to say: "Don't bring the module Box to my apartment, but <em>bring me absolutely every tool in it</em>." This gives you the advantage of having a wide variety of tools, and since you have them in your apartment and they're not all still stuck in the module Box, you don't have to constantly type module.function_name to get what you want. The syntaxis for it is:</p>
+			<pre><code>from module import *</code></pre>
+			<p>Universal imports may look great on the surface, <em>but they're not a good idea for one very important reason</em>: they can fill your program with a ton of variable and function names, but without the safety of those names still being associated with the module(s) they came from, means, the functions lost his namespace</p>
+				
+			<article class="note"> For efficiency reasons, each module is only imported once per interpreter session. Therefore, if you change your modules, you must restart the interpreter – or, if it’s just one module you want to test interactively, use reload(), e.g. reload(modulename).</article>
+		</article>
+		
+		<article class="subsection">
+			<h1>Executing modules as scripts</h1>
+			<p>When you run a Python module with</p>
+			<pre><code>python fibo.py <arguments></code></pre>
+			<p>the code in the module will be executed, just as if you imported it, but with the <em>__name__</em> set to <em>"__main__"</em>. That means that by adding this code at the end of your module:</p>
+			<pre><code>if __name__ == "__main__":
+    import sys
+    fib(int(<em>sys.argv[1]</em>))</code></pre>
+		</article>
+		
+		<article class="subsection">
+			<h1>The module search path</h1>
+			<p></p>
+		</article>
+	</body>
+</html>

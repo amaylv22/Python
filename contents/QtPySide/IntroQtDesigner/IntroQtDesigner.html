@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Introduction to Qt Designer</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>Introduction to Qt Designer</h1>
+		</header>
+		
+		<article class="subsection">
+			<p>Qt Designer is Qt's tool for designing and building graphical user interfaces (GUIs) from Qt components. You can compose and customize your widgets or dialogs in a what-you-see-is-what-you-get (WYSIWYG) manner, and test them using different styles and resolutions.</p>
+			<p>Widgets and forms created with Qt Designer integrated seamlessly with programmed code, using Qt's <em>signals and slots mechanism</em>, that lets you easily assign behavior to graphical elements. All properties set in Qt Designer can be changed dynamically within the code. Furthermore, features like <em>widget promotion and custom plugins allow you to use your own components</em> with Qt Designer.</p>
+			<p>If it is the first time you hear about Qt Designer, the following links may be of your interest.</p>
+			<ul>
+				<li><a href="media/pages/GettingToKnow.html" target="_self">Getting to Know Qt Designer</a></li>
+				<li><a href="media/pages/NewQtDesigner.html" target="_self">The New Qt Designer</a></li>	
+				<li><a href="media/pages/QuickStart.html" target="_self">A Quick Start to Qt Designer</a></li>
+				<li><a href="http://qt-project.org/doc/qt-4.8/tutorials.html" target="_blank">Qt turotials</a></li>
+			</ul>
+		</article>
+		
+		<article class="subsection">
+			<h1>Qt Designer basics</h1>
+
+			<p>The next videos presents a serie of tutorials about the basic usage of Qt Designer, the assistant for QT-GUI creation. This tutorials are created using the <em>PyQt</em> Qt binding for Python. Some changes need to be made in order of using <em>PySide</em> instead PyQt, so after each video the needed corrections are explained.</p>
+			<figure class="video">
+				<video width="600px" height="y-px" controls>
+			  	<source src="media/video1.webm" type="audio/ogg">
+			 	</video>
+			 	<figcaption>Hello world!</figcaption>
+			</figure>
+			
+			<h2 id="">Converting *.ui to python code</h2>
+			<p>In the previous video <em>pyuic4</em> were used to convert the GUI file to Python code. In order to use only <em>PySide</em> valid commands we have to use:</p>
+			<pre><code>pyside-uic -o output_file.py input_file.ui</code></pre>
+			<p>This will create a class containing all the code needed to create the GUI detailed in the *ui file.</p>
+			<p>If we want to include some code (if __name__ ...) used to test the GUI we need to execute instead:</p>
+			<pre><code>pyside-uic -x -o output_file.py input_file.ui</code></pre>
+			<p>It simply will add the next code to the output_file:</p>
+			<pre><code>if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form1 = QtGui.QDialog()   #Form1 = QtGui.QWidget()
+    ui = Ui_Form1()
+    ui.setupUi(Form1)
+    Form1.show()
+    sys.exit(app.exec_())</code></pre>
+
+			<figure class="video">
+				<video width="600px" height="y-px" controls>
+			  	<source src="media/video2.webm" type="audio/ogg">
+			 	</video>
+			 	<figcaption>Sliders and dials</figcaption>
+			</figure>
+
+			<figure class="video">
+				<video width="600px" height="y-px" controls>
+			  	<source src="media/video3.webm" type="audio/ogg">
+			 	</video>
+			 	<figcaption>Menubar menus</figcaption>
+			</figure>
+			
+		</article>
+		
+		<article class="subsection">
+			<h1>Qt-PySide tutorial</h1>
+			<figure class="video">
+				<video width="600px" height="y-px" controls>
+			  	<source src="media/Linking Buttons to Functions in Python and Qt4-designer - Linux.webm" type="audio/ogg">
+			 	</video>
+			 	<figcaption>Linking Buttons to Functions in Python and Qt4-designer</figcaption>
+			</figure>
+			
+		</article>
+		
+	</body>
+</html>

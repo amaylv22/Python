@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CherryPy components</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="CherryPy components section">
+		<meta name="description" content="CherryPy components section">
+		<meta name="author" content="JL">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1 style="text-align: center;">CherryPy components</h1>
+		</header>
+	
+		<article class="subsection">
+ 			<p>The following figure is a global overview of the process followed by an HTTP request when reaching the CherryPy server.</p>
+ 			<figure>
+ 				<img src="" alt="alt-text" width="x-px" height="y-px">
+ 				<figcaption>HTTP request cycle using CherryPy</figcaption>
+			</figure>
+			<p>Following the different components of CherryPy are presented, and a brief introduction to everyone is given.</p>
+		</article>
+		
+		<article class="subsection">
+ 			<h1>Built-in HTTP server</h1>
+ 			<p>CherryPy comes with its own web (HTTP) server, to make it self-contained. The web server is the getaway to a CherryPy application through which all HTTP requests and responses have to go.</p>
+ 			<p>It's not compulsory to use the built-in server though and CherryPy is quite able to interface itself with other web servers if needed.</p>
+ 			<p>To <b>start</b> the <b>web (HTTP) server</b> you have to make the following call:</p>
+ 			<pre><code>cherrypy.server.start()</code></pre>
+		</article>
+	
+		<article class="subsection">
+ 			<h1>Internal engine</h1>
+ 			<p>The CherryPy engine is the layer in charge of:</p>
+ 			<ul>
+ 				<li>Creating and managing <b>requests</b> and <b>response objects</b>
+ 					<ul>
+ 						<li>The <b>request</b> is in charge of retrieving and calling the page handler matching the requested-URI.</li>
+ 						<li>The <b>response</b> object constructs and validates the response before handing it back to the underlying server.</li>
+ 					</ul>
+ 				</li>
+ 				<li>Controlling, managing and monitoring the CherryPy process.</li>
+ 			</ul>
+ 			
+ 			<p>To <b>start</b> the <b>engine</b> you must issue the following call:</p>
+ 			<pre><code>cherrypy.engine.start()</code></pre>
+		</article>
+		
+		<article class="subsection">
+ 			<h1>Configuration</h1>
+ 			<p>CherryPy comes with its own configuration system allowing you to parameterize the HTTP server as well as the behavior of the CherryPy engine when processing a request-URI. Settings can be stored either in a text file (with syntax close to the INI format) or in pure Python dictionary.</p>
+ 			<p>CherryPy offers two entry points for passing configuration values, <b>global</b> to the server instance through the <code>cherrypy.config.update()</code> method, and per <b>application</b> via the <code>cherrypy.tree.mount()</code> method. To configure the CherryPy server instance itself you will need to use the <b>global</b> section of the settings.</p>
+ 			<p>In the <b>note</b> application we have defined the following settings:</p>
+ 			<pre><code>
+global_conf = {
+	'global': 	{	'engine.autoreload.on': False,
+								'server.socket_host': 'localhost',
+								'server.socket_port': 8080,
+							}}
+							
+application_conf = {
+	'/style.css': {
+		'tools.staticfile.on': True,
+		'tools.staticfile.filename': os.path.join(_curdir, 'style.css'),
+	}
+}
+ 			</code></pre>
+ 			
+ 			<p>This could be represented in a file like this:</p>
+ 			<pre><code>
+[global]
+
+server.socket_host = "localhost"
+server.socket_port = 8080
+
+[/style.css]
+
+tools.staticfile.on = True
+tools.staticfile.filename = "/full/path/to.style.css"
+ 			</code></pre>
+ 			
+ 			<p>Then we indicate to the CherryPy engine that the <b>/style.css</b> file is to be handled by the <b>staticfile</b> tool and also indicate the absolute path of the physical file to be served.</p>
+ 			
+ 			<p>To <b>notify</b> to CherryPy of our <b>global settings</b> we need to make the following call:</p>
+ 			<ul>
+ 				<li>With a dictionary: <br> <pre><code>cherrypy.config.update(conf)</code></pre></li>
+ 				<li>With a file: <br> <pre><code>cherrypy.config.update('/path/to/the/config/file')</code></pre></li>
+ 			</ul>
+ 			
+ 			<p>We also have to pass the <b>configuration</b> values to the <b>mounted applications</b> as follows:</p>
+ 			<ul>
+ 				<li>With a dictionary: <br> <pre><code>cherrypy.tree.mount(app_instance, script_name, config=conf)</code></pre></li>
+ 				<li>With a file: <br> <pre><code>cherrypy.tree.mount(app_instance, script_name, config='/path/to/config/file')</code></pre></li>
+ 			</ul>
+ 			
+ 			<p>The last way of configuring your application is by using the <code>_cp_config</code> attribute on your page handler or as a class attribute of the class containing the page handlers. E.g.</p>
+ 			<pre><code>
+class RootApp:
+	_cp_config = { 'tools.sessions.on': True }
+ 			</code></pre>
+ 			
+ 			<article class="subsection">
+ 				<h2>Start and configuration shortcut</h2>
+ 				<p>Any time that you will only mount one single application on a CherryPy server you could use the shortcut expression:</p>
+ 				<pre><code>cherrypy.quickstart(Root(),'/')</code></pre>
+ 				<p>instead of:</p>
+ 				<pre><code>cherrypy.tree.mount(Root(),'/')
+cherrypy.server.start()
+cherrypy.engine.start()</code></pre>
+			</article>
+			
+			<p>The last important point is that <b>configuration settings are independent of the prefix</b> on which the application is mounted.</p>
+		
+		</article>
+		
+		<article class="subsection">
+ 			<h1>Object publisher engine</h1>
+ 			<p>CherryPy uses it own internal lookup algorithm to retrieve the handler referred to by the request-URI. That handler would be a Python-callable object attached to a tree of published objects.</p>
+ 			<p>CherryPy defines two important concepts:</p>
+ 			<dl>
+ 				<dt>Published</dt>
+ 					<dd>a Python object is said to be published when it is attached to a tree of objects and the root of this tree is mounted on the CherryPy engine server via a call to the <code>cherrypy.tree.mount</code>. For instance: <br>
+ 					<pre><code>root = Blog()
+root.admin = Admin()
+cherrypy.tree.mount(root, '/blog')</code></pre>
+					In the above example the root object is said to be published. By extension the admin object, which is an attribute of a published object, is also published.
+ 					</dd>
+ 				
+ 				<dt>Exposed</dt>
+ 					<dd>A published object is said to be exposed when it has an attribute named <code>exposed</code> set to <code>True</code>. An exposed object must be a Python-callable.A published object <b>must be exposed</b> so that it becomes visible to the CherryPy engine. <br><br>
+ 					Exposed object is usually referred to as a page handler. You can set the <code>exposed</code> attribute 
+ 					An object or a method becomes exposed when the <b><code>@cherrypy.expose</code></b> decorator appears before it.</dd>
+ 			</dl>
+		</article>
+		
+	</body>
+</html>
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Adding logic to the UI</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>Adding logic to the UI</h1>
+		</header>
+		
+		<article class="subsection">
+			<h1>Understanding the philosophy</h1>
+			<p>Every time we generate the <em>gui.py</em> from <em>gui.ui</em> using the <em>pyside-uic</em> tool, the file is created from scratch, so <em>any changes on it, </em> will be <em>lost</em>. In order to endue some logic to the created GUI avoiding this problem, we need to interact in a different way with the ui-class in <em>gui.py</em>.</p>
+			<p>The <em>underling philosophy</em> is to manipulate the GUI from outside of the gui.py file. This could be achieved from multiple ways, but only for didactic purposes we present this first approach. In the next section another, and more convenient way is treated</p>
+			
+			<h2 id="">Instantiating the ui-class as a new-class property</h2>
+			<p>Consider the next lines of code, corresponding to the auto-generated <em>myui.py</em> file using the <em>pyside-uic</em> tool</p>
+			<pre><code># -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'untitled.ui'
+#
+# Created: Sat Apr 19 20:02:37 2014
+#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+#
+# WARNING! All changes made in this file will be lost!
+
+from PySide import QtCore, QtGui
+
+class <em>Ui_Form1</em>(object):
+    def setupUi(self, <em>Form1</em>):
+        Form1.setObjectName("Form1")
+        Form1.resize(510, 226)
+        self.widget = QtGui.QWidget(Form1)
+        self.widget.setGeometry(QtCore.QRect(0, 10, 501, 211))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtGui.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtGui.QLabel(self.widget)
+        ...</code></pre>
+			
+			<p>at the end of the script we can find:</p>
+			<pre><code>if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    <em>Form1</em> = <em>QtGui.QDialog</em>()
+    ui = <em>Ui_Form1</em>()
+    ui.<em>setupUi</em>(Form1)
+    Form1.show()
+    sys.exit(app.exec_())</code></pre>
+    		<p>in particular pay attention to the highlighted areas.</p>
+    		<p>Now we need to implement the logic outside of the <em>myui.py</em> file. Create a new python script named <em>realui.py</em>. The base code on it should be:</p>
+    		<pre><code># -*- coding: utf-8 -*-
+
+from PySide import QtCore, QtGui
+from myui import Ui_Form1
+
+class Form1Mngr(object):
+	pass
+	
+	
+if __name__ == '__main__':
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form1 = QtGui.QDialog()
+    mngrForm1 = Form1Mngr(Form1)
+    Form1.show()
+    sys.exit(app.exec_())</code></pre>
+    
+    <p>The main goal of the new <em>Form1Mngr</em> class is to implement the logic over the created ui. Please note all the differences between the former <em>main block</em> and the new.</p>
+    
+    <p>Finally we implement the <em>__init__</em> method of our new class. At the same time an implemented slot is provided as an example:</p>
+    
+    <pre><code>class Form1Mngr(object):
+
+    def __init__(self, Form1):
+        self.ui = Ui_Form1()
+        self.ui.<em>setupUi</em>(Form1)
+        QtCore.QObject.<em>connect</em>(self.ui.cmdMessage, QtCore.SIGNAL("clicked()"), self.writte_message)
+
+
+    def writte_message(self):
+        self.<em>ui.label</em>.setText("hello")
+        a = self.<em>ui.lineEdit1</em>.text()
+        print a</code></pre>
+    
+    <p>Please observe <em>how</em> the <em>gui elements</em> corresponding to the Ui_Form1 class are manipulated, <em>and how new</em> signal/slot <em>connections</em> are created.</p>
+		</article>
+		
+		<article class="subsection">
+			<h1>Applying the philosophy by inheritance</h1>
+			<p>Once the philosophy has been understood, is time to aplly it more sophisticated method, inheritance.</p>
+			<p>Instead of instantiate the original <em>Ui_Form1</em> class inside of a new <em>Form1Mngr</em> class, we will <em>inherit the latter with the former</em>.</p>
+			<p>Considering exactly the same content on <em>ui.py</em>, tephrase the content of <em>realui.py</em> as:</p>
+			<pre><code># -*- coding: utf-8 -*-
+
+from PySide import QtCore, QtGui
+from myui import Ui_Form1
+
+class Form1Mngr(Ui_Form1):
+    pass
+
+        
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form1 = QtGui.QDialog()
+    ui = <em>Form1Mngr</em>()
+    ui.setupUi(Form1)
+    Form1.show()
+    sys.exit(app.exec_())</code></pre>
+    		
+    		<p>Observe the <em>inheritance</em> in the class line, and the structure of the <em>main block</em>.</p>
+    		<p>Now we will add the same functionality as in the previous example to the ui, but this time by overriding the <em>setupUi</em> method of the <em>Ui_Form1</em> class. The resulting code is:</p>
+    		<pre><code># -*- coding: utf-8 -*-
+
+from PySide import QtCore, QtGui
+from myui import Ui_Form1
+
+class Form1Mngr(Ui_Form1):
+    def setupUi(self, Form1):
+        <em>super</em>(Form1Mngr, self).setupUi(Form1)
+        QtCore.QObject.connect(<em>self.cmdMessage</em>, QtCore.SIGNAL("clicked()"), self.writte_message)
+
+    def writte_message(self):
+        <em>self.label</em>.setText("hello")
+        a = <em>self.lineEdit1</em>.text()
+        print a
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form1 = QtGui.QDialog()
+    ui = Form1Mngr()
+    ui.setupUi(Form1)
+    Form1.show()
+    sys.exit(app.exec_())</code></pre>
+    
+    		<p>Note that all the ui elements now are <em>class properties</em> because <em>Form1Mngr</em> has inherited from <em>Ui_Form1</em>. Also pay special attention to the <em>super</em>-call line.</p>
+		</article>	
+		
+	</body>
+</html>	

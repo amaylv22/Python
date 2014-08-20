@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>What is unit testing?</title>
+        <link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>What is unit testing?</h1>
+        </header>
+        
+        <article class="subsection">
+            <p>Para asegurar en la medida de lo posible el <em>correcto funcionamiento y la calidad</em> del software se suelen utilizar distintos tipos de pruebas, como pueden ser las <em>pruebas unitarias</em>, las <em>pruebas de integración</em>, o las <em>pruebas de regresión</em>.</p>
+            <p>A lo largo de este capítulo nos centraremos en las <b>pruebas unitarias</b>, mediante las que se comprueba el correcto <em>funcionamiento de las unidades lógicas</em> en las que se divide el programa (modulo, clase, función) , <em>sin tener en cuenta la interrelación</em> con otras unidades. Idealmente, se pone a prueba todas todas las funciones y <em>todos los casos posibles</em> para cada una de ellas.</p>
+            <p>La solución más extendida para las pruebas unitarias en el mundo Python es <em>unittest</em>, a menudo combinado con <em>doctest</em> para pruebas más sencillas. Ambos módulos están incluídos en la librería estándar de Python.</p>
+        </article>
+        
+        <article class="subsection">
+            <h1>¿Por qué usar Unit Testing?</h1>
+            <p>El unit testing tiene varias ventajas:</p>
+            <ul>
+                <li>Permite probar que el programa funciona correctamente. En Python, los tests también permiten <em>identificar</em> variables que no existen o tipos esperados en las funciones (en otros lenguajes eso se hace en tiempo de compilación).</li>
+                <li>Permite confirmar el correcto <em>funcionamiento</em> del sistema <em>tras</em> una <em>modificación</em>. Comprueba tanto las cosas modificadas como las cosas que dependen de las modificadas. Esto es muy importante cuando se <em>trabaja en grupo</em> (con algún sistema de control de versiones) ya que permite asegurar que el código que usa el resto del grupo y que uno modifico sigue funcionando.</li>
+                <li>Permiten <em>documentar el código</em>. Como los tests indican como es que se tiene que comportar el programa, viendo los tests uno puede fijarse cual es el resultado esperado para ciertas entradas del programa. Esto no excluye que se tenga que escribir la documentación del código.</li>        
+            </ul>
+            
+            <p>¿Entonces porqué existen bugs si se podría escribir tests?. Unit Testing tiene algunas desventajas:</p>
+            <ul>
+                <li>Puede tomar bastante tiempo para generar una prueba, y algunas clases son fáciles de testear.</li>
+                <li>Cuando se hace un gran cambio en el código (un refactor) hay que actualizar los tests. Cuando se hace un cambio que es chico, seguramente también haya que escribir o cambiar algún test pero generalmente no toma mucho tiempo.</li>
+                <li>Algo muy importante a tener en cuenta es que aprobar los tests no significa que el sistema funcione a la perfección. Un ejemplo de esto es CPython (el python que generalmente uno instala). Tiene muchísimos tests, y aun así también tiene errores. Sin embargo, los tests unitarios garantizan cierta funcionalidad mínima.</li>
+                
+            </ul>
+            
+            
+        </article>  
+        
+    </body>
+</html> 

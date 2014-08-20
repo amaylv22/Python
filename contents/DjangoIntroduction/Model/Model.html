@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The Model</title>
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <meta name="author" content="JL">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>The Model</h1>
+        </header>
+        
+        <article class="subsection">
+            <p>Un modelo es la <em>representación de los datos</em> de nuestra aplicación. Contiene los campos básicos y el comportamiento de los datos que serán almacenados. Por lo general, cada modelo se convierte en una tabla de la base de datos.</p>
+            <ul>
+                <li>Cada modelo es una subclase de <em>django.db.models.Model</em></li>
+                <li>Cada atributo de un modelo representa a un campo de una tabla</li>
+                <li>Django automáticamente nos da acceso a la base de datos</li>
+            </ul>
+            
+            <p>Los modelos nos van a <em>permitir manipular los datos</em>: registrarlos, editarlos, actualizarlos, consultarlos, eliminarlos y realizar procesos con ellos. Toda está manipulación se reflejará luego en las vistas y posteriormente en las plantillas para mostrar los resultados en el navegador, esta <em>manipulación</em> se le conoce generalmente como: <em>Consultas</em>.</p>
+            
+            <p>Los <em>tipos de campo</em> y las <em>opciones</em> de los mismos se presentan en la siguiente figura. Una descripción más extensa de los mismos puede ser encontrada <a href="https://docs.djangoproject.com/en/1.4/ref/models/fields/" target="_blank">aqui</a>.</p>
+            <figure>
+                <img src="images/django-models.png" alt="alt-text" width="800px" height="px">
+                <figcaption>Tipos de campo para el modelo de Django</figcaption>
+            </figure>   
+            
+        </article>
+        
+        <article class="subsection">
+            <h1>El modelo en el proyecto recetario</h1>
+            <p>Una forma de enteneder mejor los conceptos englobados por el modelo es ponerlos en práctica. Siguiendo con el ejercicio del recetario.</p>
+            <p>Sin emabrgo, hasta ahora en <em>models.py</em> teniamos algo como:</p>
+            <pre><code>from django.db import models
+
+class Bebida(models.Model):
+	nombre = models.CharField(max_length=50)
+	ingredientes = models.TextField()
+	preparacion = models.TextField()
+
+	def __unicode__(self):
+		return self.nombre</code></pre>
+		<p>La clase Bebida fue solo una forma de poner en funcionamiento el proyecto. A partir de este momento pierde importancia para dar lugar a la clase <em>receta</em>, en cuya definición queda descrita la fiunción de cada una de las partes que la conformarán. Así:</p>
+		<pre><code>#-*- coding:utf-8 -*-
+#importa clases con la descripción de modelos
+from django.db import models
+#llama al modelo usuario
+from django.contrib.auth.models import User
+
+class Bebida(models.Model):
+  nombre = models.CharField(max_length=50)
+  ingredientes = models.TextField()
+  preparacion = models.TextField()
+
+  def __unicode__(self):
+      return self.nombre
+
+class Receta(models.Model):
+  #Dato cadena, longitud máxima 100 y único
+  titulo = models.CharField(max_length=100, unique=True)
+  #Dato texto, con texto de ayuda
+  ingredientes = models.TextField(help_text='Redacta los ingredientes')
+  #Dato texto, con nombre: Preparación
+  prepacion = models.TextField(verbose_name='Preparación')
+  #Dato imagen, se almacenarán en la carpeta recetas, titulo: Imágen
+  imagen = models.ImageField(upload_to='recetas', verbose_name='Imágen')
+  #Dato Fecha y Hora, almacena la fecha actual
+  tiempo_registro = models.DateTimeField(auto_now=True)
+  #Enlace al modelo Usuario que Django ya tiene construido
+  usuario = models.ForeignKey(User)
+	
+  def __unicode__(self):
+      return self.titulo</code></pre>   
+            <p>La clase Receta (modelo) tiene un atributo imagen, el cuál está direccionando las cargas que haga el usuario a la carpeta ‘recetas’ (carpeta que estará dentro de otra llamada: ‘carga’), para que esto funcione debemos modificar nuestro archivo settings.py, exactamente debemos buscar la línea: MEDIA_ROOT, y dejarla así:</p>
+            <pre><code>MEDIA_ROOT = os.path.join(RUTA_PROYECTO,'recetario/carga')</code></pre>
+            <p>Luego de haber puesto esta línea, debemos crear una carpeta que se llame ‘carga’ dentro de la carpeta del proyecto.</p>
+            <p>Dentro de esta carpeta ‘carga’ aparecerá una carpeta ‘recetas’ al momento de guardar un registro. Pero antes de ello debemos buscar el archivo admin.py y dejarlo asi:</p>
+            <pre><code>from principal.models import Bebida, Receta
+from django.contrib import admin
+
+admin.site.register(Bebida)
+admin.site.register(Receta)</code></pre>
+            <p>Esto nos permitirá agregar el modelo Receta dentro de la interfaz administrativa.</p>
+            <p>Por último debemos habilitar las URL para poder visualizar las imágenes, para ello debemos dejar el archivo urls.py asi:</p>
+            <pre><code>from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from django.conf import settings
+
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    url(r'^$','principal.views.lista_bebidas'),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^media/(?P.*)$','django.views.static.serve',
+		{'document_root':settings.MEDIA_ROOT,}
+	),
+)</code></pre>
+            <p>Esto nos permitirá acceder a las imágenes que subamos desde http://127.0.0.1:8000/media/recetas/nombre-imagen.jpg (o cualquier otra imagen).</p>
+            
+            <h2 id="">Poniendo a correr todo</h2>
+            <p>Para hacer funcionar todo, debemos sincronizar la base de datos nuevamente (esto se debe hacer cada vez que se modifique el modelo).</p>
+            <pre><code>python manage.py syncdb</code></pre>
+            <p>En caso de que queramos modificar un modelo ya existente podemos también reiniciar todos los modelos de la aplicación principal así:</p>
+            <pre><code>python manage.py reset principal</code></pre>
+            <p>Sin embargo si ya se tienen datos almacenados estos se perderán al momento de reiniciarlos, para evitar eso podemos usar aplicaciones como South, que nos permitirán trabajar con los datos de manera más profesional.</p>
+        </article>
+        
+    </body>
+</html> 

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Project's URLs and execution</title>
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <meta name="author" content="JL">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>Project's URLs and execution</h1>
+        </header>
+        
+        <article class="subsection">
+            <h1>Direcciones URL del proyecto</h1>
+            <p>Para poder visualizar los cambios que hicimos y la interfaz administrativa de Django, aún falta modificar un archivo mas, este es: urls.py (recordar que este archivo se encuentra dentro del directorio recetario). Este archivo contiene lo siguiente:</p>
+            <pre><code>from django.conf.urls import patterns, include, url
+
+# Uncomment the next two lines to enable the admin:
+# from django.contrib import admin
+# admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'recetario.views.home', name='home'),
+    # url(r'^recetario/', include('recetario.foo.urls')),
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    # url(r'^admin/', include(admin.site.urls)),
+)</code></pre>
+            <p>Y debemos dejarlo de la siguiente manera:</p>
+            <pre><code>from django.conf.urls import patterns, include, url
+from django.contrib import admin
+
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+)</code></pre>
+        </article>
+        
+        <article class="subsection">
+            <h1>Ejecución del proyecto</h1>
+            <p>Una vez que tenemos todo listo y configurado, debemos nuevamente iniciar el servidor de desarrollo que tiene el proyecto. Ya hicimos esto al principio, solo debemos digitar desde la terminal nuevamente (dentro del directorio del proyecto):</p>
+            <pre><code>python manage.py runserver</code></pre>
+            <p>Sin embargo si tratamos de acceder directamente a la dirección <em>http://127.0.0.1:8000</em> obtendremos un error, pués no ha sido declarada directamente en las urls del proyecto ya editado. Si queremos por ejemplo acceder a la pagina de administración teclearemos en el navegador la direccion <b>http://127.0.0.1:8000/admin</b>. Así mismo podemos emplear cualquiera de las otras direcciones registradas en <em>la tupla urlpatterns de setting.py</em>.</p>
+            <article class="note">Por defecto, el comando runserver arranca el servidor de desarrollo en el puerto 8000. Si quieres cambiar el puerto del servidor, pásalo como un argumento en la línea de comandos. Por ejemplo, este comando arranca el servidor en el puerto 8080:
+            <pre><code>python manage.py runserver 8080</code></pre>
+            Si quieres cambiar la dirección IP del servidor, pásala como argumento con el puerto. De este modo, para que el servidor escuche en todas las IPs públicas (útil si quieres mostrar tu trabajo en otros ordenadores), utiliza:}
+            <pre><code>python manage.py runserver 0.0.0.0:8000</code></pre>
+            </article>
+            
+        </article>  
+        
+    </body>
+</html>

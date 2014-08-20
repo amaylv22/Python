@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Creating a new project</title>
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <meta name="author" content="JL">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+        <script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                  TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });</script>
+        <link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+        <script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>        
+    </head>
+    
+    <body class="kg-content">
+        <header>
+            <h1>Creating a new project</h1>
+        </header>
+        
+        <article class="subsection">
+            <p>To create a new project simple open the terminal into the desired directory and type</p>
+            <pre><code>django-admin.py startproject projName</code></pre>
+            <p>This instruction will create two directories with the name of the project and five files:</p>
+            <ul>
+                <li>manage.py</li>
+                <li>projName [Dir]
+                    <ul>
+                        <li>__init__.py</li>
+                        <li>settings.py</li>
+                        <li>urls.py</li>
+                        <li>wsgi.py</li>
+                    </ul>
+                </li>    
+            </ul>
+            
+        </article>
+        
+        <article class="subsection">
+            <h1>Running the project</h1>
+            <p>To run the project, and check over if it is working we have to type:</p>
+            <pre><code>python manage.py runserver</code></pre>
+            <p>In terminal you must to see:</p>
+            <figure>
+                <img src="images/Runserver.png" alt="alt-text" width="px" height="px">
+                <figcaption>python manage.py runserver</figcaption>
+            </figure>
+            
+            <p>Now open the browser an go to <em>http://127.0.0.1:8000/</em>. Your project initial page will be loaded.</p>
+            
+            <p>If for some reason the port <em>8000</em> is being used by another application we can change it from the launch, for example with:</p>
+            <pre><code>python manage.py runserver 8888</code></pre>
+            <p>we manually select the port <em>8888</em>, and the address in the browser should be <em>http://127.0.0.1:8888/</em></p>
+            <p>Every project needs <em>applications</em> where we can manage the models and views. A single project may have more than one application.</p>
+        </article>  
+        
+        <article class="subsection">
+            <h1>Settings.py</h1>
+            <p>Una parte muy importante del proyecto es el archivo settings.py, este archivo permite configurar la conexión a la base de datos, la zona horaria, el idioma, los directorios principales del proyecto, las aplicaciones del proyecto, entre otras cosas.</p>
+            <p>Aprender a configurar este archivo permite optimizar el funcionamiento del proyecto, las instrucciones principales a configurar:</p>
+            
+            <h2 id="">Codificación de caracteres</h2>
+            <p>Para manejar eficientemente los caracteres especiales del idioma en django debemos agregar la siguiente línea al archivo settings.py:</p>
+            <pre><code>#encoding:utf-8</code></pre>
+            
+            <h2 id="">Ruta del proyecto</h2>
+            <p>Si no se configura la ruta del proyecto, cada vez que se cambia de directorio o de PC, se tendrá que cambiar las rutas de las plantillas, archivos estáticos y directorio de subida de contenido de los usuarios.</p>
+            <p>Esta configuracion permitirá lanzar la aplicación desde cualquier directorio y mover el proyecto a cualquier computador con Django instalado.</p>
+            <pre><code># Identificando la ruta del proyecto
+import os
+#BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))</code></pre>
+
+            <h2 id="">Administradores</h2>
+            <p>Cuando Django tiene la opción de <em>DEBUG=False</em>, las notificaciones de error de código deben ser enviadas vía correo electrónico a los administradores, junto con
+los detalles completos del error. Para poner los datos de los administradores debemos buscar la siguiente porción:</p>
+            <pre><code>ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)</code></pre>
+            <p>Y modificarla para que quede con los nombres de los administradores en forma de tupla.</p>
+            
+            <h2 id="">Configuración de la base de datos</h2>
+            <p>También podemos configurar la conexión a la base de datos según nuestras necesidades, Django soporta de manera predeterminada la conexión con <em>postgresql</em>, <em>mysql</em>, <em>sqlite3</em> y <em>oracle</em>.</p>
+            <p>Debemos buscar la siguiente sección del archivo:</p>
+            <pre><code>DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}</code></pre>
+        <p>Por ejemplo con sqlite3 una configuración posible es:</p>
+        <pre><code>DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),          # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}</code></pre>
+            <article class="note">Si estás usando PostgreSQL o MySQL, asegúrate de haber creado una base de datos en este punto. Lo puedes hacer con el comando "CREATE DATABASE nombre_basededatos;" en el intérprete interactivo de tu base de datos.
+            Si estás usando SQLite no necesitas crear nada de antemano - la base de datos se creará automáticamente cuando se necesite.</article>
+
+            <h2 id="">Zona horaria</h2>
+            <p>Django permite configurar la zona horaria del proyecto, la <a href="http://en.wikipedia.org/wiki/List_of_tz_zones_by_name" target="_self">lista de zonas horarias</a> disponibles se pueden encontrar en la wikipedia. Para configurar debemos buscar lo siguiente:</p>
+            <pre><code>TIME_ZONE = 'America/Chicago'</code></pre>
+            <p>Y definir la zona de interes.</p>
+            
+            <h2 id="">Configuración del idioma</h2>
+            <p>Django también permite configurar el idioma que usará de manera predeterminada para su funcionamiento, para configurar esto debemos buscar lo siguiente:</p>
+            <pre><code>LANGUAGE_CODE = 'en-us'</code></pre>
+            <p>Se puede consultar la <a href="http://www.i18nguy.com/unicode/language-identifiers.html" target="_self">lista de idiomas disponibles</a> para adecuarlo a nuestras necesidades.</p>
+            
+            <h2 id="">Aplicaciones instaladas</h2>
+            <p>Un proyecto en Django necesita de aplicaciones, algunas ya vienen configuradas de manera predeterminada. Para habilitar estas aplicaciones debemos buscar la siguiente sección que se encuentra casi al final del archivo settings.py</p>
+            <pre><code>INSTALLED_APPS = (
+    'django.contrib.auth',  #un sistema de autenticacion
+    'django.contrib.contenttypes',  #un framework para tipos de contenidos
+    'django.contrib.sessions',  #un framework para manejar sesiones
+    'django.contrib.sites', #un framework para manejar multiples sitions con una única instalacion de Django
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+)</code></pre>
+            <p>Y modificarlas de la siguiente manera:</p>
+            <pre><code>INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.admin',
+    #'django.contrib.admindocs',
+)</code></pre>
+            <p>Esas aplicaciones van incluidas por omisión como conveniencia para el caso común.</p>
+        
+            <h2 id="">Site ID</h2>
+            <p>Para el correcto funcionamiento de las nuevas versiones de django es necesario agregar la siguiente linea en el archivo <em>settings.py</em>:</p>
+            <pre><code>SITE_ID = 1 #or any other number</code></pre>
+            
+        </article>
+        
+        <article class="subsection">
+            <h1>Database creation</h1>
+            <p>Para crear la base de datos, debemos digitar desde la terminal la siguiente instrucción (recordar que debemos estar en la carpeta de proyecto para que todo se realice correctamente):</p>
+            <pre><code>python manage.py syncdb</code></pre>
+            <p>Esta instrucción deberá mostrar el siguiente resultado:</p>
+            <figure>
+                <img src="images/Syncdb.png" alt="alt-text" width="px" height="px">
+                <figcaption></figcaption>
+            </figure>
+            <p>Hay una pregunta que debemos responder, se refiere a la creación de un superusuario (un administrador del proyecto), para lo cual respondemos: yes (en caso de responder negativamente, no podremos usar inmediatamente el administrador predeterminado de Django). Luego de ello completamos la información que nos solicita.</p>
+            <figure>
+                <img src="images/SuperUserCreation.png" alt="alt-text" width="px" height="px">
+                <figcaption></figcaption>
+            </figure>
+            <p>Al finalizar ya estará creada la base de datos y deberán aparecer los archivos correspondientes que contienen las tablas y los datos iniciales del proyecto.</p>
+            <p>El comando <em>syncdb</em> revisa la variable <em>INSTALLED_APPS</em> y crea las tablas necesarias de acuerdo a la configuración de base de datos registrada en el archivo <em>settings.py</em>.</p>
+            <article class="note">Como ya se ha dicho, las aplicaciciones por defecto son incluidas para el caso común, pero no todos las necesitan. Si no quieres instalar alguna, simplemente comenta o elimina las líneas correspondientes de INSTALLED_APPS antes de ejecutar syncdb. El comando syncdb sólo creará las tablas para las aplicaciones listadas en INSTALLED_APPS.</article>
+        </article>
+        
+    </body>
+</html>

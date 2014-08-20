@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>UnitTest</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../../../../../KonoMngr/style/icons/konoicn.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../../../../KonoMngr/style/konoguides.css" />
+		<script src="../../../../../KonoMngr/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+  				TeX: { equationNumbers: { autoNumber: "AMS" } }
+			});</script>
+		<link rel="stylesheet" href="../../../../../KonoMngr/highlight/styles/googlecode.css">
+		<script src="../../../../../KonoMngr/highlight/highlight.pack.js" type="text/javascript"></script>
+		<script>hljs.initHighlightingOnLoad();</script>		
+	</head>
+	
+	<body class="kg-content">
+		<header>
+			<h1>UnitTest</h1>
+		</header>
+		
+		<article class="subsection">
+			<p><em>unittest</em>, también llamado PyUnit, forma parte de una familia de herramientas conocida colectivamente como xUnit, un conjunto de frameworks basados en el software SUnit para Smalltalk, creado por Kent Beck, uno de los padres de la eXtreme Programming.</p>
+		</article>
+		
+		<article class="subsection">
+			<h1>Uso de unittest</h1>
+			<p>Para cada grupo de pruebas tenemos que <em>crear</em> una <em>clase que herede</em> de <em>unittest.TestCase</em>, y añadir una serie de <em>métodos</em> que <em>comiencen con test</em>, que serán cada una de las pruebas que queremos ejecutar dentro de esa batería de pruebas.</p>
+			<p>Para ejecutar las pruebas, basta llamar a la <em>función main()</em> del módulo:</p>
+			<pre><code>if __name__ == "__main__":
+	unittest.main()</code></pre>
+			<p>con lo que se <em>ejecutarán</em> todos los métodos cuyo nombre comience con <em>test</em>, en <em>orden alfanumérico</em>. Al ejecutar cada una de las pruebas el resultado puede ser:</p>
+			<dl>
+				<dt>OK</dt>
+					<dd><p>la prueba ha pasado con éxito.</p></dd>
+				<dt>FAIL</dt>
+					<dd><p>la prueba no ha pasado con éxito. Se lanza una excepción
+<em>AssertionError</em> para indicarlo.</p></dd>
+				<dt>ERROR</dt>
+					<dd><p>al ejecutar la prueba se lanzó una <em>excepción distinta</em> de <em>AssertionError</em>.</p></dd>
+			</dl>
+			
+			<figure class="code">
+				<pre><code>import unittest
+				
+class EjemploPruebas(unittest.TestCase):
+	
+	def test(self):
+		pass
+
+
+if __name__ == “__main__”:
+	unittest.main()</code></pre>
+				<figcaption>Definición de una prueba con unittest</figcaption>
+			</figure>
+			
+		</article>	
+		
+		<article class="subsection">
+			<h1>Métodos de comprobación</h1>
+			
+			<p>Nada nos impide utilizar cláusulas if para evaluar las condiciones que nos interesen y lanzar una excepción de tipo AssertionError cuando no sea así, pero la clase <em>TestCase cuenta con varios métodos</em> que nos pueden facilitar la tarea de <em>realizar comprobaciones</em> sencillas.</p>
+			<p>Todos los métodos cuentan con un <em>parámetro opcional msg</em> con un mensaje a mostrar cuando dicha comprobación falle, y son los siguientes:</p>
+			<h2 id="">common assertions</h2>
+			
+			
+			<table border="0" cellspacing="5" cellpadding="10px" style="text-align: left; margin-left: auto; margin-right: auto;">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>Checks that</th>
+					</tr>
+				</thead>
+				<tbody>
+			    	<tr>
+						<td>assertEqual(a, b)</td>
+						<td>a == b</td>
+					</tr>
+					<tr>
+						<td>assertNotEqual(a, b)</td>
+						<td>a != b</td>
+					</tr>
+					<tr>
+						<td>assetTrue(x)</td>
+						<td>bool(x) is True</td>
+					</tr>
+					<tr>
+						<td>assertFalse</td>
+						<td>bool(x) is False</td>
+					</tr>
+					<tr>
+						<td>assertIs(a, b)</td>
+						<td>a is b</td>
+					</tr>
+					<tr>
+						<td>assertIsNot(a, b)</td>
+						<td>a is not b</td>
+					</tr>
+					<tr>
+						<td>assertIsNone(x)</td>
+						<td>x is None</td>
+					</tr>
+					<tr>
+						<td>assertIsNotNone</td>
+						<td>x is not None</td>
+					</tr>
+					<tr>
+						<td>assertIn(a, b)</td>
+						<td>a in b</td>
+					</tr>
+					<tr>
+						<td>assertNotIn(a, b)</td>
+						<td>a not in b</td>
+					</tr>
+					<tr>
+						<td>assertIsInstance(a, b)</td>
+						<td>isinstance(a, b)</td>
+					</tr>
+					<tr>
+						<td>assertNotIsInstance(a, b)</td>
+						<td>not isinstance(a, b)</td>
+					</tr>
+			  	</tbody>
+			</table>
+			
+			<dl>
+				<dt>assertEqual(first, second, msg=None):</dt>
+					<dd><p>Comprueba que los objetos pasados como parámetros sean iguales.</p></dd>
+				<dt>assertNotEqual(first, second, msg=None):</dt>
+					<dd><p>Comprueba que los objetos pasados como parámetros no sean iguales.</p></dd>
+					<dt>assertTrue(expr, msg=None):</dt>
+					<dd><p>Comprueba que la expresión sea
+cierta.</p></dd>
+				<dt>assertFalse(expr, msg=None):</dt>
+					<dd><p>Comprueba que la expresión sea
+falsa.</p></dd>
+				<dt>assertIs(first, second, msg=None):</dt>
+					<dd><p>Comrpueba que los parámetros correspondan al mismo objeto.</p></dd>
+				<dt>assertIsNot(first, second, msg=None):</dt>
+					<dd><p>Comrpueba que los parámetros no correspondan al mismo objeto.</p></dd>
+				<dt>assertIsNone(expr, msg=None):</dt>
+					<dd><p>Comprueba que la expresión sea None.</p></dd>
+				<dt>assertIsNotNone(expr, msg=None):</dt>
+					<dd><p>Comprueba que la expresión no sea None.</p></dd>
+					
+				<dt>assertIn(first, second, msg=None)</dt>
+					<dd><p>Comprueba si first esta contenido en second</p></dd>
+				<dt>assertNotIn(first, second, msg=None)</dt>
+					<dd><p>Comprueba si first no esta contenido en second</p></dd>
+				<dt>assertIsInstance(obj, cls, msg=None)</dt>
+					<dd><p>Test that obj is an instance of cls (which can be a class or a tuple of classes, as supported by isinstance()). To check for the exact type, use assertIs(type(obj), cls).</p></dd>
+				<dt>assertNotIsInstance(obj, cls, msg=None)</dt>
+					<dd><p>Test that obj is not an instance of cls (which can be a class or a tuple of classes, as supported by isinstance()). To check for the exact type, use assertIs(type(obj), cls).</p></dd>	
+			</dl>
+					
+					
+				
+				<h2 id="">more specific checks</h2>
+				
+				<table border="0" cellspacing="5" cellpadding="10px" style="text-align: left; margin-left: auto; margin-right: auto;">
+					<caption></caption>
+					<thead>
+						<tr>
+							<th>Method</th>
+							<th>Checks that</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>assertAlmostEqual(a, b)</td>
+							<td>round(a-b, 7) == 0</td>
+						</tr>
+						<tr>
+							<td>assertNotAlmostEqual(a, b)</td>
+							<td>round(a-b, 7) != 0</td>
+						</tr>
+						<tr>
+							<td>assertGreater(a, b)</td>
+							<td>a > b</td>
+						</tr>
+						<tr>
+							<td>assertGreaterEqual(a, b)</td>
+							<td>a >= b</td>
+						</tr>
+						<tr>
+							<td>assertLess(a, b)</td>
+							<td>a < b</td>
+						</tr>
+						<tr>
+							<td>assertLessEqual(a, b)</td>
+							<td>a <= b</td>
+						</tr>
+						<tr>
+							<td>assertRegexpMatches(s, r)</td>
+							<td>r.search(s)</td>
+						</tr>
+						<tr>
+							<td>assertNotRegexpMatches(s, r)</td>
+							<td>not r.search(s)</td>
+						</tr>
+						<tr>
+							<td>assertItemsEqual(a, b)</td>
+							<td>sorted(a) == sorted(b) and works with unhashable objs</td>
+						</tr>
+						<tr>
+							<td>assertDictContainsSubset(a, b)</td>
+							<td>all the key/value pairs in a exist in b</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			<dl>
+				<dt>assertAlmostEqual(first, second, places=7, msg=None):</dt>
+					<dd><p>Comprueba que los objetos pasados como parámetros sean iguales hasta el séptimo decimal (o el número de decimales indicado por places).</p></dd>
+				<dt>assertNotAlmostEqual(first, second, places=7, msg=None):</dt>
+					<dd><p>Comprueba que los objetos pasados como parámetros no sean iguales hasta el séptimo decimal (o hasta el número de decimales indicado por places).</p></dd>
+					
+					<dt>assertRegexpMatches(text, regexp, msg=None)</dt>
+						<dd><p>Test that a regexp search matches text. In case of failure, the error message will include the pattern and the text (or the pattern and the part of text that unexpectedly matched). regexp may be a regular expression object or a string containing a regular expression suitable for use by re.search().</p></dd>
+					<dt>assertNotRegexpMatches(text, regexp, msg=None)</dt>
+						<dd><p>Verifies that a regexp search does not match text. Fails with an error message including the pattern and the part of text that matches. regexp may be a regular expression object or a string containing a regular expression suitable for use by re.search().</p></dd>
+					<dt>assertItemsEqual(actual, expected, msg=None)</dt>
+						<dd><p>Test that sequence expected contains the same elements as actual, regardless of their order. When they don’t, an error message listing the differences between the sequences will be generated.</p>
+						<p>Duplicate elements are not ignored when comparing actual and expected. It verifies if each element has the same count in both sequences. It is the equivalent of assertEqual(sorted(expected), sorted(actual)) but it works with sequences of unhashable objects as well.</p>
+						<p>In Python 3, this method is named assertCountEqual.</p></dd>
+					<dt>assertDictContainsSubset(expected, actual, msg=None)</dt>
+						<dd><p>Tests whether the key/value pairs in dictionary actual are a superset of those in expected. If not, an error message listing the missing keys and mismatched values is generated.</p></dd>	
+				
+			</dl>
+			
+			<h2 id="">Checking for raised exceptions and warnings</h2>
+			<table border="0" cellspacing="5" cellpadding="10px" style="text-align: left; margin-left: auto; margin-right: auto;">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>Checks that</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>assertRaises(exc, fun, *args, **kwds)</td>
+						<td>fun(*args, **kwds) raises exc</td>
+					</tr>
+					<tr>
+						<td>assertRaisesRegexp(exc, r, fun, *args, **kwds)</td>
+						<td>fun(*args, **kwds) raises exc and the message matches regex r</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<dl>
+				<dt>assertRaises(exception, callable, *args, **kwargs):</dt>
+					<dd><p>Comprueba que al llamar al objeto callable con los parámetros definidos por *args y **kwargs se lanza una excepción de tipo exception. Para comprobar un grupo de excepciones, una tupla conteniendo las clases de excepción puede ser pasada en el parámetro exception.</p></dd>
+				<dt>assertRaises(exception)</dt>
+					<dd><p>If only the exception argument is given, returns a context manager so that the code under test can be written inline rather than as a function:</p>
+					<pre><code>with self.assertRaises(SomeException):
+	do_something()</code></pre>
+					<p>The context manager will store the caught exception object in its exception attribute. This can be useful if the intention is to perform additional checks on the exception raised:</p>
+					<pre><code>with self.assertRaises(SomeException) as cm:
+	do_something()
+	
+the_exception = cm.exception
+self.assertEqual(the_exception.error_code, 3)</code></pre>
+					</dd>
+					
+					<dt>assertRaisesRegexp(exception, regexp, callable, *args, **kwds):</dt>
+						<dd><p></p></dd>
+					<dt>assertRaisesRegexp(exception, regexp)</dt>
+						<dd><p>Like assertRaises() but also tests that regexp matches on the string representation of the raised exception. regexp may be a regular expression object or a string containing a regular expression suitable for use by re.search(). Examples:</p>
+						<pre><code>self.assertRaisesRegexp(ValueError, "invalid literal for.*XYZ'$", int, 'XYZ')</code></pre>
+                        <p>or:</p>
+                        <pre>with self.assertRaisesRegexp(ValueError, 'literal'):
+   int('XYZ')<code></code></pre></dd>
+			</dl>
+			
+			<h2 id="">type-specific methods</h2>
+			<p>The next list of type-specific methods are automatically used by <em>assertEqual()</em>, therefore is not necessary to invoke these methods directly.</p>
+			<table border="0" cellspacing="5" cellpadding="10px" style="text-align: left; margin-left: auto; margin-right: auto;">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>Used to compare</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>assertMultiLineEqual(a, b)</td>
+						<td>strings</td>
+					</tr>
+					<tr>
+						<td>assertSequenceEqual(a, b)</td>
+						<td>sequences</td>
+					</tr>
+					<tr>
+						<td>assertListEqual(a, b)</td>
+						<td>lists</td>
+					</tr>
+					<tr>
+						<td>assertTupleEqual(a, b)</td>
+						<td>tuples</td>
+					</tr>
+					<tr>
+						<td>assertSetEqual(a, b)</td>
+						<td>sets or frozensets</td>
+					</tr>
+					<tr>
+						<td>assertDictEqual(a, b)</td>
+						<td>dicts</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<p>The <em>assertEqual()</em> method dispatches the equality check for objects of the same type to different type-specific methods. These methods are already implemented for most of the built-in types, but it’s also possible to register new methods using <em>addTypeEqualityFunc()</em>:</p>
+			
+			<dl>
+				<dt>addTypeEqualityFunc(typeobj, function)</dt>
+					<dd><p>Registers a type-specific method called by assertEqual() to check if two objects of exactly the same typeobj (not subclasses) compare equal. function must take two positional arguments and a third msg=None keyword argument just as assertEqual() does. It must raise self.failureException(msg) when inequality between the first two parameters is detected – possibly providing useful information and explaining the inequalities in details in the error message.</p></dd>
+			</dl>	
+			
+			
+		</article>
+		
+		<article class="exercise">
+			<h1>Prueba unitaria para la función cuadrado</h1>
+			<p>Crear una prueba unitaria que compruebe el correcto funcionamiento de la función cuadrado, la cual devuelve el cuadrado del valor pasado como parámetro. Mostrar el resultado de ejecutar la prueba con la función correctamente programada, seguido de la salida generada al inducir un error en la misma.</p>
+			<h2></h2>
+			<pre><code>import unittest
+			
+def cuadrado(num):
+	'''Calcula el cuadrado de un numero.'''
+	return num ** 2
+
+class EjemploPruebas(unittest.TestCase):
+	def test(self):
+		l = [0, 1, 2, 3]
+		r = [cuadrado(n) for n in l]
+		self.assertEqual(r, [0, 1, 4, 9])
+
+
+if __name__ == "__main__":
+	unittest.main()</code></pre>
+	
+			<p>La salida sin errores al ejecutar el script es:</p>
+			<pre><code>.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK</code></pre>
+			<p>Al inducir un error se obtiene:</p>
+			<pre><code>F
+======================================================================
+FAIL: test (__main__.EjemploPruebas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "script.py", line 14, in test
+    self.assertEqual(r, [0, 1, 4, 9])
+AssertionError: Lists differ: [0, 2, 4, 6] != [0, 1, 4, 9]
+
+First differing element 1:
+2
+1
+
+- [0, 2, 4, 6]
+?     ^     ^
+
++ [0, 1, 4, 9]
+?     ^     ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)</code></pre>
+		</article>
+		
+		<article class="subsection">
+			<h1>Preparando el contexto</h1>
+			<p>En ocasiones es necesario preparar el entorno en el que queremos que se ejecuten las pruebas. Por ejemplo, puede ser necesario introducir unos valores por defecto en una base de datos, crear una conexión con una máquina, crear algún archivo, etc. Esto es lo que se conoce en el mundo de xUnit como <em>test fixture</em>.</p>
+			<p>La clase TestCase proporciona un par de métodos que podemos sobreescribir para <em>construir</em> y <em>desconstruir el entorno</em>, y que se ejecutan antes y después de cada prueba definida en esa clase. Estos métodos son <b>setUp()</b> y <b>tearDown()</b>.</p>
+		<p>El siguiente ejemplo muestra su uso:</p>
+		<pre><code>import random
+import unittest
+
+class TestSequenceFunctions(unittest.TestCase):
+
+    def setUp(self):
+    	# context preparation
+        self.seq = range(10)
+
+    def test_shuffle(self):
+        # make sure the shuffled sequence does not lose any elements
+        random.shuffle(self.seq)
+        self.seq.sort()
+        self.assertEqual(self.seq, range(10))
+	
+    def test_immutable(self):
+        # should raise an exception for an immutable sequence
+        self.assertRaises(TypeError, random.shuffle, (1,2,3))
+
+    def test_choice(self):
+        element = random.choice(self.seq)
+        self.assertTrue(element in self.seq)
+
+    def test_sample(self):
+        with self.assertRaises(ValueError):
+            random.sample(self.seq, 20)
+        for element in random.sample(self.seq, 5):
+            self.assertTrue(element in self.seq)
+    
+    def tearDown(self):
+		# context destruction
+		del self.seq
+
+
+if __name__ == '__main__':
+    unittest.main()</code></pre>
+		</article>	
+		
+	</body>
+</html>	
