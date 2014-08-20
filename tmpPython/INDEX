@@ -1,0 +1,26 @@
+PART1 Python core language
+	Python Basics
+		About python -> Complemented by introduction
+		Fundamentals -> Basic concepts
+		Flow control structures -> Flow control structures
+		Functions -> Functions
+		Lists -> Lists
+		Sets -> new section ...
+		Dictionaries -> Dictionaries
+		Basic file I/O -> Basic files I/O
+		Exception handling: the basicsc -> Basic exception handling
+		
+				-> Exercises -> as part of some of the prev. sections
+	
+	Object oriented programming
+		Classes -> Classes
+		Getters and setters
+		Inheritance
+		
+	
+	
+	Modules ***
+		Introduction to modules -> Modules
+	UnitTests ***
+	_*_
+		

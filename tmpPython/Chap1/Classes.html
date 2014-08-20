@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Classes. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Classes. Python course notes">
+		<meta name="description" content="classes on python programming language">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Classes</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+
+			<p>Python has been an object-oriented language from day one. Because of this, creating and using classes and objects are downright easy.</p>
+			
+			
+			
+			<!-- CREATING CLASSES -->
+			<hr>
+			<h1>Creating classes</h1>
+			<hr>
+			
+			<p>By convention, user-defined Python class names start with a capital letter.</p>
+			<p> Ideally, you should define your classes in separate file then you should import them in your main program file using import statement.</p>
+			<p>The class statement creates a new class definition. The name of the class immediately follows the keyword class followed by a colon as follows:</p>
+			<code>
+			class Class_name(object):<br>
+	    &nbsp;&nbsp;'Optional class documentation string'<br>
+ 	  	&nbsp;&nbsp;class_suite
+			</code>
+			<ul>
+				<li>The class has a documentation string which can be access via ClassName.__doc__.</li>
+				<li>The class_suite consists of all the component statements, defining class members, data attributes, and functions.</li>
+			</ul>
+			<p>Following is the example of a simple Python class:</p>
+			<code>
+			class Animal(object):<br>
+   		&nbsp;&nbsp;'Common base class for all animals'<br>
+  	 	&nbsp;&nbsp;animalCount = 0<br><br>
+
+   		&nbsp;&nbsp;def __init__(self, name, family):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;self.name = name<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;self.family = family<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Animal.animalCount += 1<br><br>
+   
+   		&nbsp;&nbsp;def displayTotal(self):<br>
+     	&nbsp;&nbsp;&nbsp;&nbsp;print "Animal total %d" % Animal.animalCount<br><br>
+
+   		&nbsp;&nbsp;def displayanimal(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;print "Name : ", self.name,  ", Family: ", self.family<br>
+			</code>
+			
+			<ul>
+				<li>The variable animalCount is a <b>class variable or member variable</b> cause it is available to all members of a class, so its <b>value</b> would <b>be shared among all instances of a this class</b>. This <b>can be accessed</b> as Animal.animalCount <b>from inside</b> the class <b>or outside</b> the class.</li>
+				<li>The first method <b>__init__()</b> is a special method which is called <b>class constructor</b> or initialization method that Python calls when you create a new instance of this class.<br>
+				The <b>__init__()</b> function <b>is required</b> for classes, and it's used <b>to initialize the objects</b> it creates. __init__() <b>always takes at least one argument</b>, <b>self</b>, that refers to the object being created. You can think of __init__() as the function that "boots up" each object the class creates.</li>
+				<li>You <b>declare other class methods</b> like <b>normal functions</b> with the exception that the <b>first argument to each method is self</b>. Python adds the self argument to the list for you; <b>you don't need to include it when you call</b> the methods.</li>
+			</ul>
+
+			
+			<!-- CREATING INSTANCE OBJECTS -->
+			<hr>
+			<h1>Creating instance objects</h1>
+			<hr>
+			
+			<p>To create instances of a class, you call the class using class name and pass in whatever arguments its __init__ method accepts.</p>
+			<code>
+			new_obj = Class_name(init_arg_1, init_arg_2, ..., init_arg_n)
+			</code>
+			
+			<!-- ACCESSING ATTRIBUTES -->
+			<hr>
+			<h1>Accessing attributes</h1>
+			<hr>
+			
+			<p>An attribute is a object variable that holds data associated with the object. And it's a component of the object.</p>
+			<p>You <b>access the object's attributes</b> using the <b>dot operator</b> with object.</p>
+			<code>
+			new_obj.attribute_name
+			</code>
+			
+			<p>Instead of using the normal statements to access attributes, you can use following functions:</p>
+     	<dl>
+    		<dt>getattr(obj, name[, default])</dt>
+    			<dd>to access the attribute of object.</dd>
+    		<dt>hasattr(obj,name)</dt>
+    			<dd>to check if an attribute exists or not.</dd>
+    		<dt>setattr(obj,name,value)</dt>
+    			<dd>to set an attribute. <b>If</b> attribute <b>does not exist</b> then it would be <b>created</b>.</dd>
+    		<dt>delattr(obj, name)</dt>
+    			<dd>to delete an attribute.</dd>
+    	</dl>
+    
+    
+				<!-- Sub section -->
+			<h2>Built-in class attributes</h2>
+			<p>Every Python class keeps following built-in attributes and they can be accessed using dot operator like any other attribute:</p>
+
+    	<dl>
+    		<dt>__dict__</dt>
+  	  		<dd>    Dictionary containing the class's namespace.</dd>
+ 		   	<dt>    __doc__</dt>
+  	  		<dd>    Class documentation string, or None if undefined.</dd>
+ 		   	<dt>    __name__</dt>
+ 		   		<dd>    Class name.</dd>
+  	  	<dt>    __module__</dt>
+  	  		<dd>    Module name in which the class is defined. This attribute is "__main__" in interactive mode.</dd>
+  	  	<dt>    __bases__</dt>
+  	  		<dd>    A possibly empty tuple containing the base classes, in the order of their occurrence in the base class list.</dd>
+  	  	<dt>__repr__</dt>
+  	  		<dd>returns a representation of the object stored data. Providing a return value by overriding this method we can tell Python how to represent an object of our class (for instance, when using a print statement).</dd>
+  	  </dl>
+
+			
+			
+			<!-- CALLING METHODS -->
+			<hr>
+			<h1>Calling methods</h1>
+			<hr>
+			
+			<p>A method is a functions of an object. You <b>call the class methods</b> using the <b>dot operator</b> with object.</p>
+			<code>
+			new_obj.method_name(...)
+			</code>
+			
+			
+			<!-- DESTROYING OBJECTS -->
+			<hr>
+			<h1>Destroying objects</h1>
+			<hr>
+			
+			<p>Python deletes unneeded objects (built-in types or class instances) automatically to free memory space. The process by which Python periodically reclaims blocks of memory that no longer are in use is termed <b>garbage collection</b>.</p>
+
+			<p>Python's garbage collector runs during program execution and is triggered when an object's reference count reaches zero. An object's reference count changes as the number of aliases that point to it changes:</p>
+
+			<p>An object's reference count increases when it's assigned a new name or placed in a container (list, tuple, or dictionary). The object's reference count decreases when it's <b>deleted with del</b>, its reference is reassigned, or its reference goes out of scope. When an object's reference count reaches zero, Python collects it automatically.</p>
+
+			<p>You normally won't notice when the garbage collector destroys an orphaned instance and reclaims its space. But a class <b>can implement the special method __del__()</b>, called a destructor, that is invoked when the instance is about to be destroyed. This method might be used to clean up any nonmemory resources used by an instance.</p>
+	
+			<!-- CLASS INHERITANCE -->
+			<hr>
+			<h1>Class inheritance</h1>
+			<hr>
+			
+			<p>sometimes you want one class of objects to have the powers an abilities (that is, attributes and methods) of another class. Instead of starting from scratch, you can create a class by deriving it from a preexisting class by listing the parent class in parentheses after the new class name.</p>
+			<p>The <b>child</b> class <b>inherits</b> the <b>attributes and methods</b> of its parent class, and <b>you can use those attributes and methods as if they were defined in the child class</b>. A child class can also override data members and methods from the parent.</p>
+			<p>Derived classes are declared much like their parent class; however, a list of base classes to inherit from are given after the class name:</p>
+			<code>
+			class SubClassName (ParentClass1&lt;, ParentClass2, ...&gt;):<br>
+   		&nbsp;&nbsp;'Optional class documentation string'<br>
+   		&nbsp;&nbsp;class_suite<br>
+			</code>
+			
+			<p>You can use <b>issubclass()</b> or <b>isinstance()</b> functions to <b>check a relationships of two classes</b> and instances:</p>
+
+    	<dl>
+    		<dt>issubclass(sub, sup)</dt>
+    			<dd>returns true if the given subclass <b>sub</b> is indeed a subclass of the superclass <b>sup</b>.</dd>
+    		<dt>isinstance(obj, Class)</dt>
+    			<dd>returns true if <b>obj</b> is an instance of class <b>Class</b> or is an instance of a subclass of Class</dd>
+    	</dl>
+
+			<!-- Sub section -->
+			<h2>Overriding methods</h2>
+			<p>Sometimes you'll want one class that inherits from another to not only take on the methods and attributes of its parent, but to override one or more of them.</p>
+			<p>You can always override your parent class methods. One reason for overriding parent's methods is because you may want special or different functionality of the same method in your subclass.</p>
+			<p>To overwrite a method only rewrite the method in the subclass, and python will take the last generation definition to run the method when it's called from a subclass instanced object</p>
+			
+						<!-- SubSUB section -->
+			<h2>Using original overriding methods</h2>
+			<p>Sometimes you'll be working with a derived class (or <b>subclass</b>) and realize that you've overwritten a method or attribute defined in that base class (also called a <b>parent</b> or <b>superclass</b>) that you actually need. When this happens, you can directly <b>access the attributes or methods of a superclass</b> with Python's<b> built-in super call</b>.</p>
+
+			<p>The syntax looks like this:</p>
+			
+			<code>
+			class DerivedClass(Base):
+   		&nbsp;&nbsp;def some_method(self):
+      &nbsp;&nbsp;&nbsp;&nbsp;super(DerivedClass, self).meth()
+			</code>
+			
+			<p>Where meth() is a method from the base class.</p>
+			
+
+			<!-- DATA HIDING -->
+			<hr>
+			<h1>Data hiding</h1>
+			<hr>
+	
+			<p>An <b>object's attributes</b> may or <b>may not be visible outside the class</b> definition. For these cases, you can <b>name attributes with a double underscore prefix</b>, <b>and</b> those attributes <b>will not be directly visible</b> to outsiders. E.g.:</p>
+			<code>
+			class JustCounter:<br>
+   		&nbsp;&nbsp;__secretCount = 0<br><br>
+
+	   	&nbsp;&nbsp;def count(self):<br>
+	   	&nbsp;&nbsp;&nbsp;&nbsp;#functions suite
+			</code>
+			
+			<p>Python protects those members by internally changing the name to include the class name. You can access such attributes as:</p>
+			<code>
+			print object._className__attrName
+			</code>
+			
+						
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

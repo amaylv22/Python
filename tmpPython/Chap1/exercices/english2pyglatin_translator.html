@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Exercise. English to pyglatin translator</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Exercise. English to pyglatin translator. Python course notes">
+		<meta name="description" content="Exercise. English to pyglatin translator on python programming lenguage">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Exercise. English to pyglatin translator</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			
+			<h2>Instructions:</h2>
+			<p>The rules for the English to Pig Latin translator are:</p>
+			<ol>
+				<li>If the original word starts with a vowel, you append the suffix 'ay' to the end of the word.<br>
+				<b>Example:</b> anaconda &rarr; anacondaay</li>
+				<li>If the original word starts with a consonant, you move the first letter of the word to the end, and then append the suffix 'ay'.<br>
+				<b>Example:</b> python &rarr; ythonpay</li>
+			</ol>				
+			
+			<h3>Solution:</h3>
+			<p>Downloable python script solution file: <a href="english2pyglatin.py">english2pyglatin.py</a></p>
+			<code>
+			#saving in a variable the tail of each translated word<br>
+			pyg = 'ay'<br><br>
+
+			#requesting the user to submit a word<br>
+			original = raw_input("Enter a word: ")<br><br>
+
+			#checking if the word isn't empty and if it's formed only by alphabetical charcaters<br>
+			if (len(original) > 0) and original.isalpha():<br>
+			&nbsp;#preparing the word for translation<br>
+			&nbsp;original = original.lower()<br>
+			&nbsp;first = original[0]<br>
+			&nbsp;#determining if the original word begins with vowel or consonant<br>
+			&nbsp;if first == 'a' or first == 'e' or first == 'i' or first == 'o' or first == 'u':<br>
+			&nbsp;&nbsp;print original + pyg<br>
+			&nbsp;else:<br>
+			&nbsp;&nbsp;print original[1:len(original)] + first + pyg<br><br>
+
+			else:<br>
+			&nbsp;print "empty or no valid word"<br>
+				
+			</code>
+			
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

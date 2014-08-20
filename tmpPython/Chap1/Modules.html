@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Modules. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Modules. Python course notes">
+		<meta name="description" content="Modules on python programming language">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Modules</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			
+			<p>A module is a file that contains definitions (including variables and functions) that you can use.</p>
+			
+			<!-- Importing modules -->
+			<hr>
+			<h1>Importing modules</h1>
+			<hr>
+			
+				<!-- Sub section -->
+			<h2>Generic import</h2>
+			<p>This operation will import all the functions an variables contained in the module</p>
+			<code>
+			import module_name
+			</code>
+			<p>By Importing module functions this way, it becomes necessary to call every function preceding it with the module name (<b>module.func_name()</b>), e.g.</p>
+			<code>
+			import math<br>
+			print math.sqrt(25)
+			</code>
+
+				<!-- Sub section -->
+			<h2>Function import</h2>
+			<p>This operation will import only certain variables and functions, those named in the call</p>
+			<code>
+			from module import functionA <br>
+			from module import functionA &lt;, functionB&lt;, ... functionN&gt;&gt;
+			</code>
+			<p>Using this kind of import you <b>doesn't need to write any more module.functions_name() to call a function</b>, you can simply call it as function_name()</p>
+			
+				<!-- Sub section -->
+			<h2>Universal import</h2>
+			<p>When you use the <b>generic import</b> method, you're basically saying: "Bring the module box to my apartment so I can use all the cool stuff in it". Whenever you want a tool in the module, you have to the box an pull out the thing you want (which is why you have to type module.function_name for everything) even though the box is in your apartment, all the cool stuff you want is still in that box).</p>
+			<p>When you choose the <b>function import</b> method, you're saying: "Bring me only the function tool from the Module Box, and don't bring the Math Box to my apartment." This means you can use the function without reference to the module, but if you want anything else from the module, you have to import it separately, since the whole module Box isn't in your apartment for you to dig through.</p>
+			<p>The third option is to say: "Don't bring the module Box to my apartment, but bring me absolutely every tool in it." This gives you the advantage of having a wide variety of tools, and since you have them in your apartment and they're not all still stuck in the module Box, you don't have to constantly type <b>module.function_name</b> to get what you want.</p>
+			<p>The syntax for this is:</p>
+			<code>
+			from module import *
+			</code>
+			<p>Universal imports may look great on the surface, but they're not a good idea for one very important reason: they can fill your program with a ton of variable and function names, but without the safety of those names still being associated with the module(s) they came from, means, the functions lost his namespace</p>
+			<p><a href="http://www.tutorialspoint.com/python/python_modules.htm">Para completar modulos</a></p>
+
+			<!-- Sub section -->
+			<h2>The dir( ) Function</h2>
+
+			<p>The dir() built-in function returns a sorted list of strings containing the names defined by a module. The list contains the names of all the modules, variables, and functions that are defined in a module. Following is a simple example:</p>
+			<code>
+			#!/usr/bin/python
+			<br>
+			<br>
+			# Import built-in module math <br>
+			import math <br>
+			<br>
+			content = dir(math) <br>
+			<br>
+			print content;
+			</code>
+			<p>When the above code is executed, it produces following result:</p>
+			<code>
+			['__doc__', '__file__', '__name__', 'acos', 'asin', 'atan', 
+'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 
+'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log',
+'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 
+'sqrt', 'tan', 'tanh']
+			</code>
+			<p>Here the special string variable __name__ is the module's name, and __file__ is the filename from which the module was loaded.</p>
+
+			<!-- Sub section -->
+			<h2>The globals() and locals() Functions</h2>
+			
+			<p>The globals() and locals() functions can be used to return the names in the global and local namespaces depending on the location from where they are called. If locals() is called from within a function, it will return all the names that can be accessed locally from that function, and if globals() is called from within a function, it will return all the names that can be accessed globally from that function.</p>
+			
+			<p>The return type of both these functions is dictionary. Therefore, names can be extracted using the keys() function.</p>
+			
+			<!-- Sub section -->
+			<h2>The reload() Function</h2>
+
+			<p>When the module is imported into a script, the code in the top-level portion of a module is executed only once. Therefore, if you want to reexecute the top-level code in a module, you can use the reload() function. The reload() function imports a previously imported module again. The syntax of the reload() function is this:</p>
+	<code>
+	reload(module_name)	
+	</code>
+
+
+
+
+
+
+
+
+
+			<!-- Principal modules -->
+			<hr>
+			<h1>Principal modules</h1>
+			<hr>
+			
+			
+			<!-- Creating modules -->
+			<hr>
+			<h1>Creating modules</h1>
+			<hr>
+			
+			<!-- Sub section -->
+			<h2>Packages in Python</h2>
+
+			<p>A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on.</p>
+			<p>For example, consider a file Pots.py available in Phone directory. This file has following line of source code:</p>
+
+			<code>
+			#!/usr/bin/python
+			<br>
+			def Pots(): <br>
+			   &nbsp;&nbsp;print "I'm Pots Phone"
+			</code>
+
+			<p>Similar way we have another two files having different functions with the same name as above:</p>
+
+					<ul>
+						<li>Phone/Isdn.py file having function Isdn()</li>
+						<li>Phone/G3.py file having function G3()</li>
+					</ul>
+		
+			<p>Now create one more file __init__.py in Phone directory :</p>
+
+					<ul>
+						<li>Phone/__init__.py</li>
+					</ul>
+		
+
+			<p>To make all of your functions available when you've imported Phone, you need to put explicit import statements in __init__.py as follows:</p>
+			<code>
+			from Pots import Pots <br>
+			from Isdn import Isdn <br>
+			from G3 import G3
+			</code>
+
+
+			<p>After you've added these lines to __init__.py, you have all of these classes available when you've imported the Phone package:</p>
+
+			<code>
+#!/usr/bin/python <br>
+<br>
+# Now import your Phone Package.<br>
+import Phone<br>
+<br>
+Phone.Pots()<br>
+Phone.Isdn()<br>
+Phone.G3()
+			</code>
+
+
+<p>When the above code is executed, it produces following result:</p>
+
+<code>
+I'm Pots Phone <br>
+I'm 3G Phone <br>
+I'm ISDN Phone
+</code>
+			
+			
+			
+			
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Control flow structures. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Control flow structures. Python course notes">
+		<meta name="description" content="Control flow structures on python programming language">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Control flow structures</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			<!-- DECISION MAKING STRUCTURES-->
+			<hr>
+			<h1>Decision making structures</h1>
+			<hr>
+			
+			<p>Decision making structures require that the programmer specify one or more conditions to be evaluated or tested by the program, along with a statement or statements to be executed if the condition is determined to be true, and <b>optionally</b>, other statements to be executed in the opposite case.</p>
+			<p>Python assumes any <b>non-zero</b> and <b>non-null</b> values as <b>true</b>, and <b>false</b> otherwise.</p>
+			<p>Python provides the following types of decision making statements.</p>
+
+				<!-- if statements -->
+			<h2>if statements</h2>
+			<p>An <b>if statement</b> consists of a Boolean expression fallowed by one or more statements that will be executed if the expression is determined to be true</p>
+			<code>
+				if EXPRESSION:<br>
+				&nbsp;STATEMENT(s)
+			</code>
+			<p>Remember that in python the <b>whitespace is significant</b>, mining that in python the whitespace (tabs or spaces) does the work that curly braces ({}) does in other programming languages.</p>
+			
+				<!-- if...else statements -->
+			<h2>if...else statements</h2>
+			<p>An <b>if statement</b> can be followed by an optional <b>else statement</b>, which executes when the boolean expression is false</p>
+			<p>There could be at most, only one <b>else</b> statement following <b>if</b></p>
+			<code>
+				if EXPRESSION:<br>
+				&nbsp;STATEMENT(s)<br>
+				else:<br>
+				&nbsp;STATEMENT(s)<br>
+			</code>
+
+			<h3>the elif statement</h3>
+			<p>The <b>elif</b> statement allows you to check multiple expressions for truth value, and execute a block of code as soon as one of the conditions values to true.</p>
+			<p>Like the <b>else</b>, the <b>elif</b> statement is optional. However, unlike else, there can be an arbitrary number of elif statements following if. The syntax of the if...elif statement is:</p>
+			<code>
+				if EXPRESSION_1:<br>
+				&nbsp;STATEMENT(s)<br>
+				elif EXPRESSION_2:<br>
+				&nbsp;STATEMENT(s)<br>
+				elif EXPRESSION_3:<br>
+				&nbsp;STATEMENT(s)<br>
+				else:<br>
+				&nbsp;STATEMENT(s)<br>
+			</code>
+			
+			<!-- LOOPS -->
+			<hr>
+			<h1>Loops</h1>
+			<hr>
+			
+			<p>A loop statement allows us to execute a statement or group of statements multiple times.</p>
+			<p>Python programming language provides two types of loops, <b>while loop</b> and <b>for loop</b></p>
+			
+			
+			
+				<!-- Section -->
+			<h2>For loop</h2>
+			<p>The <b>for loop</b> in Python has the ability to <b>iterate over the items of any sequence</b>, such as a list or a string.</p>
+			<p>The syntax of a for loop in Python programming language is:</p>
+			<code>
+			for iterating_var in sequence:<br>
+		  &nbsp;&nbsp;statement(s)
+			</code>
+			<p>If a sequence contains an expression list, it is evaluated first. Then, the first item in the sequence is assigned to the iterating variable iterating_var. Next, the statements block is executed. <b>Each item in the list is assigned to iterating_var</b>, and the statements(s) block is executed <b>until the entire sequence is exhausted</b>.</p>
+			
+					<!-- SUB section -->
+			<h3>creating sequences using <b>range()</b>:</h3>
+			<p>range() is a python built in function that automatically creates sequence depending of the number of arguments it receives:</p>
+			<dl>
+				<dt>range(n)</dt>
+					<dd>generate a list of n values, from 0 to (n-1), i.e., [0, 1, 2, ..., n-1]</dd>
+				<dt>range(i,n)</dt>
+					<dd>generate a list of (n-i) elements, from i to (n-1)</dd>
+				<dt>range(i,n,di)</dt>
+					<dd>generate a list of 1 + (n -1 -i)/di elements, from i  to (n-1) in increments of di units</dd>
+			</dl>
+			<p>To use a range generated sequence in a for loop is only necessary to:</p>
+			<code>
+			for iterating_var in range(...):<br>
+		  &nbsp;&nbsp;statement(s)
+			</code>
+			
+								<!-- SUB section -->
+			<h3>creating sequences using <b>enumerate()</b>:</h3>
+			<p>Enumerate(), will make certain loops a bit clearer. enumerate(thing), where thing is either an iterator or a sequence, <b>returns a iterator that will return</b> (0, thing[0]), (1, thing[1]), (2, thing[2]), and so forth.</p>
+			<p>A common idiom to change every element of a list looks like this:</p>
+			<code>
+			for i in range(len(L)):<br>
+	    &nbsp;&nbsp;item = L[i]<br>
+  	  &nbsp;&nbsp;# ... compute some result based on item ...<br>
+  	  &nbsp;&nbsp;L[i] = result<br>			
+			</code>
+			<p>This can be rewritten using enumerate() as:</p>
+			<code>
+			for i, item in enumerate(L):<br>
+    	&nbsp;&nbsp;# ... compute some result based on item ...<br>
+	    &nbsp;&nbsp;L[i] = result<br>			
+			</code>
+			
+					<!-- SUB section -->
+			<h3>iterating by sequence index:</h3>
+			<p>An alternative way of <b>iterating</b> through <b>each item</b> is <b>by index</b> offset into the sequence itself. Generate a <b>sequence</b> using <b>range with the len of</b> the item <b>container</b>:</p>
+			<code>
+			for iterating_var in range(len(list)):<br>
+		  &nbsp;&nbsp;statement(s)
+			</code>
+			
+					<!-- SUB section -->
+			<h3>iterate over multiple list:</h3>
+			<p>It's also common to need to iterate over two lists at once. This is where the built-in zip() function comes in handy. Zip() will create pairs of elements when passed two lists, and will stop at the end of the shorter list.</p>
+			<p>Zip <b>can handle as many lists as being needed</b>. Zip take as parameters a set of lists, and take the ith element of every list, and join them onto a tuple, and later join all the tuples in a new list.</p>
+			<code>
+			list1 = [...]<br>
+			list2 = [...]<br>
+			list3 = [...]<br>
+			new_tuple_list = zip( list1, list2, list3)
+			</code>
+			<p>Zip could be used with the for loop to iterate over multiple list at the same time</p>
+			<code>
+			for a, b in zip(list_a, list_b):<br>
+			&nbsp;&nbsp;statement(s) using a and b
+			</code>
+			<p>If the lists are conform by different number of elements, zip will take the fewest one to create the new list of tuples.</p>
+			
+					<!-- SUB section -->
+			<h3>inline for to create sequences:</h3>
+			<p>A special form of the for loop could be used to generate sequences as lists. The syntax of an inline for is:</p>
+			<code>
+			new_list = [f(i) for i in range(n)]
+			</code>
+			<p>where f(i) could be any operations chain desired applied on i.</p>
+			
+			
+				<!-- Section -->
+			<h2>While loop</h2>
+			<p>A <b>while</b> loop statement in Python programming language <b>repeatedly executes</b> a target statement <b>as long as a given condition</b> is <b>true</b> (true is any nonzero value).</p>
+			<p>The syntax of a while loop in Python programming language is:</p>
+			<code>
+			while expression:<br>
+		  &nbsp;&nbsp;statement(s)
+			</code>
+			<p>Here key point of the while loop is that the <b>loop might not ever run</b>. When the <b>condition</b> is tested and the <b>result is false</b>, the loop body will be skipped and the first statement after the while loop will be executed.</p>
+			<p>In the other hand, a loop becomes <b>infinite loop if</b> a <b>condition never becomes false</b>.</p>
+			
+					<!-- SUB section -->
+			<h3>single statement suites:</h3>
+			<p>If your while clause consists only of a single statement, it may be placed on the same line as the while header. Here is the syntax and example of a one-line while clause:</p>
+			<code>
+			while condition: statement
+			</code>
+			
+			
+				<!-- Section -->
+			<h2>The else statement used with loops</h2>
+			<p>Python supports to have an else statement associated with a loop statements.</p>
+    	<ul>
+    		<li>If the <b>else statement</b> is <b>used with a for loop</b>, the <b>else</b> statement <b>is executed when</b> the loop has <b>exhausted iterating the list</b>. If the loop exits as the result of a break, the else will not be executed.</li>
+	    	<li>If the <b>else statement</b> is <b>used with a while loop</b>, the <b>else</b> statement <b>is executed when</b> the <b>condition becomes false</b>. This means that <b>it will execute if the loop is never entered or if the loop exits normally</b>. If the loop exits as the result of a break, the else will not be executed.</li>
+	    </ul>
+
+			<p>The following example illustrates the combination of an else statement with a for statement and with a while statement.</p>
+			<code>
+			for iterating_var in sequence:<br>
+		  &nbsp;&nbsp;statement(s)<br>
+		  else:<br>
+ 		  &nbsp;&nbsp;statement(s)<br><br>
+			
+			
+			while expression:<br>
+		  &nbsp;&nbsp;statement(s)<br>
+		  else:<br>
+ 		  &nbsp;&nbsp;statement(s)<br>
+			</code>
+			
+			<!-- LOOPS CONTROL STATEMENTS -->
+			<hr>
+			<h1>Loop control statements</h1>
+			<hr>
+			
+			<p>Loop control statements change execution from its normal sequence. When execution leaves a scope, all automatic objects that were created in that scope are destroyed.</p>
+			<p>Python supports the following control statements.</p>
+			
+				<!-- Section -->
+			<h2>Break statement</h2>
+			<p>Terminates the loop statement and transfers execution to the statement immediately following the loop.</p>
+			<p>The most common use for break is when some external condition is triggered requiring a hasty exit from a loop. The break statement <b>can be used in</b> both <b>while and for loops</b>.</p>
+			<p>The syntax for a break statement in Python is as follows:</p>
+			<code>
+			break
+			</code>
+
+				<!-- Section -->
+			<h2>Continue statement</h2>
+			<p>Causes the loop to skip the remainder of its body and immediately retest its condition prior to reiterating.</p>
+			<p>The continue statement in Python returns the control to the beginning of the while loop. The continue statement rejects all the remaining statements in the current iteration of the loop and moves the control back to the top of the loop.</p>
+			<p>The continue statement <b>can be used in</b> both <b>while and for loops</b>.</p>
+			<p>The syntax for a continue statement in Python is as follows:</p>
+			<code>
+			continue
+			</code>
+			
+				<!-- Section -->
+			<h2>Pass statement</h2>
+			<p>Pass is a null operation, when it is executed, nothing happens. It is useful as a placeholder <b>when a statement is required syntactically</b>, but no code needs to be executed or you do not want any command or code to execute.</p>
+			<p>The pass is also useful in places where your code will eventually go, but has not been written yet (e.g., in stubs for example).</p>
+			<p>The syntax for a pass statement in Python is as follows:</p>
+			<code>
+			pass
+			</code>			
+			
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

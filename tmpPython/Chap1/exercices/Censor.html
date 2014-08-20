@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Exercise. Censor</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Exercise. Censor. Python course notes">
+		<meta name="description" content="Exercise. Censor on python programming language">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Exercise. Censor</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			
+			<h2>Instructions:</h2>
+			<p>Write a function called censor that takes two strings, text and word, as input and returns the text with the word you chose replaced with asterisks. </p>
+			<ol>
+				<li>The strings that you will be given will contain no punctuation or upper case letters.</li>
+				<li>The number of asterisks you put should correspond to the number of letters in the word.</li>
+			</ol>
+						
+			
+			<h3>Solution:</h3>
+			<p>Downloable python script solution file: <a href="censor.py">censor.py</a></p>
+			<code>
+			def censor (text, word):<br>
+    	&nbsp;&nbsp;new_line = []<br>
+    	&nbsp;&nbsp;asterisks = '*' * len(word)<br>
+    	&nbsp;&nbsp;for wds in text.split():<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;if wds == word:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_line.append(asterisks)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_line.append(wds)<br>
+    	&nbsp;&nbsp;return " ".join(new_line)
+			</code>
+			
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

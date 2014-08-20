@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Basic concepts. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Basic concepts. Python course notes">
+		<meta name="description" content="Basic concepts on python programming lenguage">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Python basics concepts</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			<!-- VARIABLES & DATA TYPES -->
+			<hr>
+			<h1>Variables & data types</h1>
+			<hr>
+				<!-- Variables -->
+			<h2>Variables</h2>
+			<p>A <b>variable</b> is a word/identifier/object that hangs a value. The variables on python are defined dynamically, it means that it not neccesary to specify the type of data that will be store on them</p>
+			<p>The symbol "=" is the assignment operator, for example</p>
+			<code>
+				x = 1<br>
+				text = "hola"
+			</code>
+			
+				<!-- data types -->
+			<h2>Data types in python</h2>
+			<p>Here the main python's data types are described</p>
+			<table>
+				<tr>
+					<th>Type</th>
+					<th>Class</th>
+					<th>Notes</th>
+				</tr>
+				<tr>
+					<td>int</td>
+					<td>integer number</td>
+					<td>Fixed precision variable, automatically converted to long type in overflow case</td>
+				</tr>
+				<tr>
+					<td>float</td>
+					<td>decimal number</td>
+					<td>double precision decimal number</td>
+				</tr>
+				<tr>
+					<td>bool</td>
+					<td>boolean variable</td>
+					<td>True or False (case-sensitive)</td>
+				</tr>
+				<tr>
+					<td>string</td>
+					<td>string of characters</td>
+					<td>a string literal is created writing it down between quotations marks ('_') or ("_")</td>
+				</tr>
+			</table>
+			<h3>Strings special charcters</h3>
+			<p>Not any symbol could use written directly in a string, there are several <b>special characters</b> that wait for special care to be included in a string of charcaters.</p>
+			<p>Due its nature, this character needs to be marked as unike or <b>escaped</b>. The <b>backslash charcater (\)</b> does this work, just appearing directly before the special charcater, e.g.</p>
+			<code>
+				var1 = "you\'re the one who..."
+			</code>
+			
+			<!-- MATH OPERATIONS -->
+			
+			<hr>
+			<h1>Math Operations</h1>
+			<hr>
+			
+				<!-- Arithmetic operators -->
+			<h2>Arithmetic operator</h2>
+			<p>There are six principal arithmetic operator in python, these are:</p>
+			<ol>
+				<li>Addition &rarr; (+)</li>
+				<li>Subtraction &rarr; (-)</li>
+				<li>Multiplication &rarr; (*)</li>
+				<li>Division &rarr; (/)</li>
+				<li>Exponentiation &rarr; (**)</li>
+				<li>Modulo &rarr; (%)</li>
+			</ol>
+			
+						<!-- COMPARATORS -->
+			
+			<hr>
+			<h1>Comparators</h1>
+			<hr>
+			
+			<p>There are six different comparators, each one generates a True or False result once been evaluated:</p>
+			<ol>
+				<li>Equal to (<b>==</b>)</li>
+				<li>Not equal to (<b>!=</b>)</li>
+				<li>Less than or  (<b><</b>)</li>
+				<li>Less than or equal to (<b><=</b>)</li>
+				<li>Greater than (<b>></b>)</li>
+				<li>Greater than or equal to (<b>>=</b>)</li>
+			</ol>
+			
+						<!-- LOGICAL OPERATORS -->
+			
+			<hr>
+			<h1>Logical operators</h1>
+			<hr>
+			
+			<p>Also known as boolean operators, there are three of them and they are used to obtain True or False results based on the conventional true tables of conjunction (&), disjunction (|) and negation (~).</p>
+			<ol>
+				<li>And (<b>and</b>)</li>
+				<li>Or (<b>or</b>)</li>
+				<li>Not  (<b>not</b>)</li>
+			</ol>
+			
+			<!-- order of operation for logic operators -->
+			<h2>Order of operation for logic operators</h2>
+			<p>The order to evaluate the logical operator is at first <b>not</b>, next <b>and</b>, finally <b>or</b>.</p>
+			<p>This order can be changed by including parentheses.</p>
+			
+						<!-- BITWISE OPERATORS -->
+			
+			<hr>
+			<h1>Bitwise operators</h1>
+			<hr>
+			
+			<p>Bitwise operations are operations that directly manipulate bits. And its syntaxis is:</p>
+			<code>
+			element_1 <b>operator</b> elemnt_2
+			</code>
+			<p>for all of them, exept for the <b>not</b> operator that is:</p>
+			<code>
+			<b>operator</b> element
+			</code>
+			<p>The six baisc bitwise operators are:</p>
+			<dl>
+				<dt>Right shift (<b>&gt;&gt;</b>)</dt>
+					<dd>This operator work by shifting the bits to the right by a designated number of slots. It is mathematically equivalent to floor dividing by 2, e.g.: <br>
+					<code>
+					0b0010100 &gt;&gt; 3 = 0b000010 (20 &gt;&gt; 3 = 2) <br>
+0b0000010 &gt;&gt; 2 = 0b000000 (2 &gt;&gt; 2 = 0)
+					</code>
+					</dd>
+				<dt>Left shift (<b>&lt;&lt;</b>)</dt>
+					<dd>This operator work by shifting the bits to the left by a designated number of slots. It is mathematically equivalent to multiplying by 2, e.g.: <br>
+					<code>
+					0b000001 &lt;&lt; 2 = 0b000100 (1 &lt;&lt; 2 = 4) <br>
+					0b000101 &lt;&lt; 3 = 0b101000 (5 &lt;&lt; 3 = 40)
+					</code>
+					</dd>
+				<dt>Bitwise AND (<b>&</b>)</dt>
+					<dd>performs the bit-by-bit conjunction operation, and return the resultant number</dd>
+				<dt>Bitwise OR (<b>|</b>)</dt>
+					<dd>performs the bit-by-bit disjunction operation, and return the resultant number</dd>
+				<dt>Bitwise XOR (<b>^</b>)</dt>
+					<dd>performs the exclusive or operation (1 is either of the two incoming bits are 1 but noth both) on a bit level, and returns the result</dd>
+				<dt>Bitwise NOT (<b>~</b>)</dt>
+					<dd>The bitwise NOT operator just flips all of the bits in a single number.</dd>
+			</dl>
+			
+			<p><b>NOTE:</b> to print a decimal number in its binary representation use the <b>bin()</b> function.</p>
+			<p>You can also represent numbers in base 8 and base 16 using the <b>oct()</b> and <b>hex()</b> functions.</p>
+			<p>Aditionaly, using the second parameter of the <b>int()</b> function, you can specify the base of the number that you're trying to convert into an integer:</p>
+			<code>
+			int("1010",2) -> 10
+			</code>
+			
+			<!-- TERMINAL PRINTING -->
+			<hr>
+			<h1>Terminal Printing</h1>
+			<hr>
+			
+				<!-- Basic printing -->
+			<h2>Basic printing</h2>
+			<p>In Python the command <b>print</b> is used to show results and the content of variables in the console</p>
+			<p>The syntax looks like this:</p>
+			<code>
+			print "Welcome to python"
+			</code>
+			<p><b>when</b> the message is a <b>string literal</b>. Or like this:</p>
+			<code>
+			print var1
+			</code>
+			<p><b>when</b> the content is saved into a <b>variable</b></p>
+			
+				<!-- String concatenation -->
+			<h2>String concatenation</h2>
+			<p>The operator (<b>+</b>) used between two string is used to concatenate them.</p>
+			<code>
+			print "string 1" + "string 2"<br>
+			print var1 + var2
+			</code>
+			
+				<!-- String fromating with % -->
+			<h2>String formating with %</h2>
+			<p>Another way to work with concatenated strings is using the "substitution operator" (<b>%</b>), that works as a variable inside of a string, e.g.</p>
+			<code>
+			print "This is a message from %s" % (name_1)
+			</code>
+			<p>It's posible to have as many variables as ones want, but all of the have to be separated by commas between the parentheses after the symbol <b>%</b>, this is:</p>
+			<code>
+			print "Today, %s of the %s week of %s, you need to..." % (today, week_cont, month)
+			</code>
+			<p><a href="http://www.tutorialspoint.com/python/python_strings.htm">Python % code</a></p>
+			<p>We can specify the number of floating-point decimals to print by changing "%f" to "%.xf", where x is the number of decimals we want (be sure to note the . between % and x!). </p>
+			
+						<!-- THE ZEN OF PYTHON -->
+			<hr>
+			<h1>The Zen of python</h1>
+			<hr>
+			
+			<p>Beautiful is better than ugly.<br>
+    Explicit is better than implicit.<br>
+    Simple is better than complex.<br>
+    Complex is better than complicated.<br>
+    Flat is better than nested.<br>
+    Sparse is better than dense.<br>
+    Readability counts.<br>
+    Special cases aren't special enough to break the rules.<br>
+    Although practicality beats purity.<br>
+    Errors should never pass silently.<br>
+    Unless explicitly silenced.<br>
+    In the face of ambiguity, refuse the temptation to guess.<br>
+    There should be one-- and preferably only one --obvious way to do it.<br>
+    Although that way may not be obvious at first unless you're Dutch.<br>
+    Now is better than never.<br>
+    Although never is often better than *right* now.<br>
+    If the implementation is hard to explain, it's a bad idea.<br>
+    If the implementation is easy to explain, it may be a good idea.<br>
+    Namespaces are one honking great idea -- let's do more of those!</p>
+			
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

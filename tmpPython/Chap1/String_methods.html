@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>String methods. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="String methods. Python course notes">
+		<meta name="description" content="String methods on python programming lenguage">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">String methods</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			<!-- BASIC STRING METHODS -->
+			<hr>
+			<h1>Basic string methods</h1>
+			<hr>
+				<!-- Access bu offset -->
+			<h2>Acces by ofset</h2>
+			<p>Each character in a string has a <b>subscript</b> or <b>offset</b>, which is the value that represent its position in the character chain. Using this "adress" ones can get to each character in the string individually</p>
+			<p>The number starts at <b>0</b> for the leftmost character and increses by one as you move character-by-charcter to the right</p>
+			<p>Therefor to obtain the character in the n position inside string <b>var</b>:</p>
+			<code>
+			var[n]
+			</code>
+			<p>The method also could be used with explicit literal strings:</p>
+			<code>
+			"WORD"[2] &rarr; 'R'
+			</code>
+			
+				<!-- len() -->
+			<h2>Length of a string &rarr; <b>len()</b></h2>
+			<p>Gets the length of a string, that is, the number of charcaters in the chain, returned as integer</p>
+			<code>
+			print len(var1)
+			</code>
+		
+						<!-- lower() -->
+			<h2>Transform to lower case &rarr; <b>lower()</b></h2>
+			<p>Transform all characters in the string to its lower case representation</p>
+			<code>
+			print var1.lower()
+			</code>
+			
+						<!-- upper() -->
+			<h2>Transform to upper case &rarr; <b>upper()</b></h2>
+			<p>Transform all characters in the string to its upper case representation</p>
+			<code>
+			print var1.upper()
+			</code>
+			
+						<!-- str() -->
+			<h2>Convert to string &rarr; <b>str()</b></h2>
+			<p>The str() method returns a string from whatever non-string data beteween the braces</p>
+			<code>
+			print str(var1)
+			</code>
+
+							<!-- isalpha() -->
+			<h2> alphabetical composition &rarr; <b>isalpha()</b></h2>
+			<p>The str() method returns True if the string is composed exclusively with alphabetical charactersa</p>
+			<code>
+			var1.isalpha()
+			</code>
+			
+							<!-- slice [i:j] -->
+			<h2>	Slicing strings &rarr; <b>[i:j]</b></h2>
+			<p>If it is necessary a slice of a string could be obtained telling the interpreter the range of characters ID the have to be preserved. I.e., you can get the "slice" of <b>s</b> from character <b>i</b> to one character before <b>j</b> using <b>s[i:j].</b></p>
+			<code>
+			new_sliced_string = string_var[i:j]
+			</code>
+			
+				<!-- split() -->
+			<h2> separating the words of a string &rarr; <b>split()</b></h2>
+			<p>Return a list of the words of the string s. If the optional second argument sep is absent or None, the words are separated by arbitrary strings of whitespace characters (space, tab, newline, return, formfeed). If the second argument sep is present and not None, it specifies a string to be used as the word separator. The returned list will then have one more item than the number of non-overlapping occurrences of the separator in the string. If maxsplit is given, at most maxsplit number of splits occur, and the remainder of the string is returned as the final element of the list (thus, the list will have at most maxsplit+1 elements). If maxsplit is not specified or -1, then there is no limit on the number of splits (all possible splits are made).</p>
+    <p>The behavior of split on an empty string depends on the value of sep. If sep is not specified, or specified as None, the result will be an empty list. If sep is specified as any string, the result will be a list containing one element which is an empty string.</p>
+			<code>
+			s.split(&lt;sep&lt;, maxsplit&gt;&gt;)
+			</code>
+			
+							<!-- split() -->
+			<h2> joining list of strings &rarr; <b>join()</b></h2>
+			<p>The method join() returns a string in which the string elements of sequence have been joined by str separator.</p>
+			<p>Following is the syntax for join() method</p>
+			<code>
+			str.join(sequence)
+			</code>
+			<p>Where sequence is a sequence of the elements to be joined.</p>
+
+			<p><a href="http://docs.python.org/release/2.5.2/lib/string-methods.html">String methods</a></p>
+			<p><a href="http://docs.python.org/2/library/stdtypes.html">String methods. Complete the tutorial</a></p>
+			<p><a href="http://docs.python.org/2/library/string.html">Strings</a></p>
+			<p><a href="http://www.tutorialspoint.com/python/python_strings.htm">A lot of strings methods and theory</a></p>
+			
+			
+
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Functions. Python notes</title>
+		<link rel="shortcut icon" type="image/x-icon" href="">
+		<meta name="title" content="Functions. Python course notes">
+		<meta name="description" content="Functions on python programming lenguage">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			table,th,td
+			{
+				border:						1px solid black;
+				border-collapse:	collapse;
+				padding: 					15px;
+			}
+</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1 style="text-align: center;">Functions</h1>
+		</header>
+		
+		<article style="margin: 70px; line-height: 150%;">
+			
+			<p>A function is a reusable section of code written to perform a specific task in a program. Functions provide better modularity for your application and a high degree of code reusing.</p>
+			<p>Python gives you many <b>built-in</b> function like <b>print()</b>, but you can also create <b>your own functions</b>. The functions are called <b>user-defined functions</b></p>
+			<p>The values that the user gives to the functions when he call it to perform its job are called <b>arguments</b> or <b>parameters</b> depending of the context. The <b>argument</b> is the piece of code or values that actually is given to the function when it's called in execution time, while the <b>parameter</b> is the name you use when you write the functions code, to identify the future given values </p>
+			<p>You can think of parameters as nicknames the functions definition gives to arguments.</p>
+			
+			<!-- FUNCTION SYNTAX -->
+			<hr>
+			<h1>Function syntax</h1>
+			<hr>
+			
+				<!-- Sub section -->
+			<h2>Defining a function</h2>
+			<p>Functions are <b>defined</b> using the keyword <b>def</b>, and consist on three parts:</p>
+			<dl>
+				<dt>Header</dt>
+					<dd>The block begin with the keyword <b>del</b> followed by the function names, parentheses (within which are all <b>parameters</b> the function takes), and finally a colon (:).</dd>
+				<dt>Docstring</dt>
+					<dd>A triple-quoted, multi-line comment that briefly explains what the functions does.</dd>
+				<dt>Body</dt>
+					<dd>Is the code block that describes the procedures the functions carries out. The statement <b>return</b> exits a functions, optionally passing back an expression to the caller. A return statement with no arguments is the same as <b>return None</b></dd>
+			</dl>
+			<code>
+			def function_name (&lt;parameters&gt;):<br>
+			&nbsp;&nbsp;&lt;"""documentation string"""&gt;<br>
+			&nbsp;&nbsp;body
+			&nbsp;&nbsp;return &lt;expression&gt;
+			</code>
+			
+				<!-- Subsection -->
+			<h2>Calling a functions</h2>
+			<p>Defining a functions only gives it a name, specifies the parameters that are to be included in the function, and structures the blocks of code.</p>
+			<p>Once the basic structure of a function is finalized, you can execute it by calling it from another function or dircetly from any part of the program.</p>
+			<p>To call a function you only need to write its name followed by his arguments within parentheses. If the functions doesn't need any arguments, the parentheses will appear empty</p>
+			<code>
+			#calling function square(n) on 9<br>
+			square(9)<br><br>
+			#calling function random_real<br>
+			random_real()
+			</code>
+			
+			
+			<!-- FUNCTION ARGUMENTS -->
+			<hr>
+			<h1>Function arguments</h1>
+			<hr>
+
+			<p>A function can be call by using the following tyes of formal arguments:</p>
+			<ul>
+				<li>Required arguments</li>
+				<li>Keyword arguments</li>
+				<li>Default arguments</li>
+				<li>Variable-length arguments</li>
+			</ul>
+			
+				<!-- Subsection -->
+			<h2>Required arguments</h2>
+			<p>Required arguments are the arguments passed to a function in correct positional order. Here the number of arguments in the function call should match exactly with the function definition to avoid syntax errors.</p>
+			
+				<!-- Subsection -->
+			<h2>Keyword arguments</h2>
+			<p>Keyword arguments are related to the function calls. When keyword arguments are used in a function call, the caller identifies the arguments by the parameter name and not by the order.</p>
+			<p>This python capability allows you to skip arguments or place the out of order because the python interpreter is able to use the keywords provided to match the values with parameters, e.g.,</p>
+			<code>
+			# Function definition is here<br>
+			def printinfo( name, age ):<br>
+   			&nbsp;&nbsp;"""This prints a passed info into this function"""<br>
+   			&nbsp;&nbsp;print "Name: ", name;<br>
+   			&nbsp;&nbsp;print "Age ", age;<br>
+   			&nbsp;&nbsp;return;<br><br>
+
+			# Now you can call printinfo function<br>
+			printinfo( age=50, name="miki" );
+			</code>
+			
+				<!-- Subsection -->
+			<h2>Default arguments</h2>
+			<p>A default argument is an argument that assumes a default value is a value is not provided in the function call for the argument. It's import to remember to avoid the use of keyword arguments, the arguments with default values has to be listed at the end of the parameters chain in the function definition. Otherwise you will have to use keyword arguments to ensure the interpreter can differentiate them.</p>
+			<p>The next examples show the discused topic:</p>
+			<code>
+			#using default arguments without keywords<br>
+			def print_info (name, age = 15):<br>
+			&nbsp;&nbsp;print str(name) + " is " + str(age) + " years old."<br><br>
+			#calling the function<br>
+			print_info("name_1")
+			</code>
+			<p></p>
+			<code>
+			#using default arguments with keywords<br>
+			def print_info (name = "John Due", age):<br>
+			&nbsp;&nbsp;print str(name) + " is " + str(age) + " years old."<br><br>
+			#calling the function<br>
+			print_info(age = 16)
+			</code>
+			
+				<!-- Subsection -->
+			<h2>Variable number fo arguments</h2>
+			<p>It could be necessary to process a function for more arguments than you specified while defining the function. These arguments are called variable-length arguments. Because it will be imposible to define a name for each of the "unknown number" arguments, that why only one container name is given when defining the function, the name of this container is presceded by an asterisk (*). This tuple <b>remains empty if no additional arguments are specified</b> during the function call.</p>
+			<p>The general syntax for a function with non-keyword variable arguments is this:</p>
+			<code>
+			def functionname(&lt;formal_args,&gt; *var_args_tuple ):<br>
+   		&nbsp;&nbsp;"""function_docstring"""<br>
+   		&nbsp;&nbsp;function_suite<br>
+   		&nbsp;&nbsp;return &lt;expression&gt;
+			</code>
+			<p>Following is a simple example:</p>
+			<code>
+			# Function definition is here<br>
+			def printinfo( arg1, *vartuple ):<br>
+   			&nbsp;&nbsp;"This prints a variable passed arguments"<br>
+   			&nbsp;&nbsp;print "Output is: "<br>
+   			&nbsp;&nbsp;print arg1<br>
+   			&nbsp;&nbsp;for var in vartuple:<br>
+     	 		&nbsp;&nbsp;&nbsp;&nbsp;print var<br>
+   			&nbsp;&nbsp;return;<br><br>
+   			
+			# Now you can call printinfo function<br>
+			printinfo( 10 );<br>
+			printinfo( 70, 60, 50 );<br>
+			</code>
+			
+			<p>When the above code is executed, it produces following result:</p>
+			
+			<code>
+			Output is:<br>
+			10<br>
+			Output is:<br>
+			70<br>
+			60<br>
+			50<br>
+			</code>
+			
+			<!-- ANONYMOUS FUNCTIONS -->
+			<hr>
+			<h1>Anonymous functions</h1>
+			<hr>
+			
+			<p>The <b>lambda</b> keyword can be used to create <b>small anonymous functions</b>. This functions are called anonymous because they are not declared in the standard manner by using the <b>def</b> keyword.</p>
+			<p>Some of the characteristics of the anonymous functions are:</p>
+			<ol>
+				<li>Can take any number of arguments but return just one value in the form of a expression.</li>
+				<li>They cannot contain commands of multiple expressions</li>
+				<li>An anonymous function cannot be a direct call to print</li>
+				<li>Have their own local namespace and cannot access variables other than those in their parameter list and those in the global namespace</li>
+				<li>They are not the equivalent to inline statements in C or C++</li>
+			</ol>
+			<p>The syntax of lambda functions contains only a single statemnt, which is as fallows:</p>
+			<code>
+			lambda &lt;arg1 &lt;, arg2, ..., argn&gt;&gt;: expression
+			</code>
+			<p>Following is the example to show how lambda form of functions works:</p>
+			<code>
+			# Function definition is here<br>
+			sum = lambda arg1, arg2: arg1 + arg2;<br><br>
+
+			# Now you can call sum as a function<br>
+			print "Value of total : ", sum( 10, 20 )<br>
+			print "Value of total : ", sum( 20, 20 )
+			</code>
+			
+			<!-- BUILT-IN FUNCTIONS -->
+			<hr>
+			<h1>Built-in functions</h1>
+			<hr>
+			
+			<p>There's some functions that python gives you without importing any module, this functions are called built-in functions. Here is the list of built-in functions of python:</p>
+			<dl>
+				<dt>max()</dt>
+					<dd>takes any number of arguments (separated by commas) and returns the largest one</dd>
+				<dt>min()</dt>
+					<dd>given a series of arguments (separated by commas), it returns the smallest one.</dd>
+				<dt>abs()</dt>
+					<dd>returns the absolute value of the number it takes as an argument</dd>
+				<dt>type()</dt>
+					<dd>returns the type of the data it receives as an argument</dd>
+				<dt>dir()</dt>
+					<dd>returns a sorted list of strings containing the names defined by a module. The list contains the names of all the modules, variables, and functions that are defined in a module</dd>
+				<dt>str()</dt>
+					<dd>converts the variable content into a string</dd>
+			</dl>
+			
+						
+			<!-- comment -->
+			
+		</article>
+	
+	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
